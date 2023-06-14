@@ -1,5 +1,12 @@
+import Info from './Info'
+import Board from './Board'
+
 export default function Game() {
     return (
-        <p>Game works!</p>
+        <>
+            <h1>OSO game</h1>
+            <Info />
+            <Board />
+        </>
     );
 }
