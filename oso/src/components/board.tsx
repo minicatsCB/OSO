@@ -1,4 +1,4 @@
-import './Board.css';
+import styles from './Board.module.css';
 
 function getBoardStyle(numRows: number, numCols: number) {
     return {
@@ -17,7 +17,7 @@ function generateGrid(rows: number, cols: number) {
 
 function Cell({text}: {[key: string]: string}) {
     return (
-        <button type="button" className="cell">{text}</button>
+        <button type="button" className={styles.cell}>{text}</button>
     );
 }
 
