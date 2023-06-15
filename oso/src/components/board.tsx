@@ -1,4 +1,3 @@
-import styles from './Board.module.css';
 import styled from 'styled-components'
 
 const ROWS_NUM :number = 3;
@@ -13,13 +12,17 @@ const Grid = styled.div`
     gridGap: 2;
 `;
 
+const StyledCell = styled(Cell)`
+    background-color: white;
+`;
+
 function generateGrid(rows: number, cols: number) {
     return new Array(rows).fill(0).map(() => new Array(cols).fill(0));
 }
 
-function Cell({text}: {[key: string]: string}) {
+function Cell({className, text}: {[key: string]: string}) {
     return (
-        <button type="button" className={styles.cell}>{text}</button>
+        <button type="button" className={className}>{text}</button>
     );
 }
 
@@ -30,7 +33,7 @@ export default function Board() {
         <Grid className="container">
             {grid.map((row, rowIdx) =>
                 row.map((col, colIdx) => (
-                    <Cell key={`${rowIdx}-${colIdx}`} text={`${rowIdx}-${colIdx}`} />
+                    <StyledCell key={`${rowIdx}-${colIdx}`} text={`${rowIdx}-${colIdx}`}></StyledCell>
                 ))
             )}
         </Grid>
