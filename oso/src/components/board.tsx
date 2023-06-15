@@ -4,7 +4,7 @@ import Cell from './Cell';
 const ROWS_NUM :number = 3;
 const COLS_NUM :number = 3;
 
-const Grid = styled.div`
+const StyledGrid = styled.div`
     width: 300px;
     height: 300px;
     display: grid;
@@ -21,12 +21,12 @@ export default function Board() {
     const grid = generateGrid(ROWS_NUM, COLS_NUM);
 
     return (
-        <Grid className="container">
+        <StyledGrid className="container">
             {grid.map((row, rowIdx) =>
                 row.map((col, colIdx) => (
                     <Cell key={`${rowIdx}-${colIdx}`} text={`${rowIdx}-${colIdx}`}></Cell>
                 ))
             )}
-        </Grid>
+        </StyledGrid>
     );
 }
