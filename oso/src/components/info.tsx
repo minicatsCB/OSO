@@ -1,5 +1,5 @@
-export default function Info() {
+export default function Info({status}: {[key: string]: string}) {
     return (
-        <p>Turn for:</p>
+        <p>{status}</p>
     );
 }
