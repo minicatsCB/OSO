@@ -2,8 +2,21 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders title', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const titleElement = screen.getByText(/OSO game/i);
+  expect(titleElement).toBeInTheDocument();
 });
+
+test('renders info panel', () => {
+  render(<App />);
+  const infoElement = screen.getByText(/Next player:/i);
+  expect(infoElement).toBeInTheDocument();
+});
+
+test('renders board', () => {
+  render(<App />);
+  const clickableCells = screen.getAllByRole('button');
+  expect(clickableCells).toHaveLength(9);
+});
+
