@@ -2,7 +2,7 @@ import Info from './Info'
 import Board from './Board'
 import { createContext, useState } from 'react';
 
-export const GameContext = createContext<Number[]>([]);
+export const GameContext = createContext<Array<string>>([]);
 
 const ROWS : number = 3;
 const COLS : number = 3;
@@ -18,7 +18,7 @@ export default function Game() {
         return (xIsNext ? 'X' : 'O');
     }
 
-    function getStatus(winnerToken: any): string  {
+    function getStatus(winnerToken: string | null): string  {
         if (winnerToken) {
             return 'Winner: ' + winnerToken;
         } else {
@@ -34,7 +34,7 @@ export default function Game() {
         return !!winnerToken ;
     }
 
-    function onBoardClick(index: any) {
+    function onBoardClick(index: number): void {
         if (isThereAWinner() || isCellFilled(index)) {
             return;
         }
@@ -59,7 +59,7 @@ export default function Game() {
     );
 }
 
-function calculateWinner(cells: any): string | null {
+function calculateWinner(cells: Array<string>): string | null {
     const winLines = [
       [0, 1, 2],
       [3, 4, 5],

@@ -7,9 +7,9 @@ const Button = styled.button`
 `;
 
 export default function Cell({className, index, onClick}: any) {
-    const value = useContext(GameContext) as Number[];
+    const value = useContext(GameContext);
 
-    const text = value.at(index)?.toString();
+    const text = value.at(index);
 
     return (
         <Button type="button" className={className} onClick={onClick}>{text}</Button>

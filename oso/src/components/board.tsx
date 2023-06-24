@@ -10,17 +10,17 @@ const StyledGrid = styled.div<{ $rowsNum: number; $colsNum: number; }>`
   grid-gap: 2px;
 `;
 
-function generateGrid(rows: number, cols: number) {
+function generateGrid(rows: number, cols: number): Array<Array<string>> {
     return new Array(rows).fill(0).map(() => new Array(cols).fill(0));
 }
 
-export default function Board({rows, cols, onClick}: any) {
+export default function Board({rows, cols, onClick} : any) {
     const grid = generateGrid(rows, cols);
 
     return (
         <StyledGrid $rowsNum={rows} $colsNum={cols} className="container">
-            {grid.map((row: any, rowIdx: number) =>
-                row.map((col: any, colIdx: number) => {
+            {grid.map((row: Array<string>, rowIdx: number) =>
+                row.map((col: string, colIdx: number) => {
                     const cellIdx = (rowIdx * cols) + colIdx;
                     return (
                         <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={() => onClick(cellIdx)}></Cell>
