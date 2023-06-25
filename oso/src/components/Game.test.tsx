@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 // Example of draw context: ['X', 'O', 'X', 'X', 'X', 'O', 'O', 'X', 'O']
 // Note: X alwasy starts the game
 
-test('if X player wins info status reflect it', () => {
+test('if X player wins info status reflect it and board gets unclickable', () => {
     render(<Game />)
 
     const clickableCells = screen.getAllByRole('button');
@@ -19,9 +19,12 @@ test('if X player wins info status reflect it', () => {
 
     const infoElement = screen.getByText("Winner: X");
     expect(infoElement).toBeInTheDocument();
+
+    const unusedCellIdx = 7;
+    expect(clickableCells[unusedCellIdx]).toContainHTML('');
 });
 
-test('if O player wins info status reflect it', () => {
+test('if O player wins info status reflect it and board gets unclickable', () => {
     render(<Game />)
 
     const clickableCells = screen.getAllByRole('button');
@@ -34,34 +37,9 @@ test('if O player wins info status reflect it', () => {
 
     const infoElement = screen.getByText("Winner: O");
     expect(infoElement).toBeInTheDocument();
-});
 
-test('if X player wins board gets unclickable', () => {
-    render(<Game />)
-
-    const clickableCells = screen.getAllByRole('button');
-
-    for (const cellIdx of [0, 1, 4, 8, 6, 3, 2, 5]) {
-        act(() => {
-            userEvent.click(clickableCells[cellIdx]);
-        });
-    }
-
-    expect(clickableCells[7]).toContainHTML('');
-});
-
-test('if O player wins board gets unclickable', () => {
-    render(<Game />)
-
-    const clickableCells = screen.getAllByRole('button');
-
-    for (const cellIdx of [0, 1, 7, 4, 5, 7, 2]) {
-        act(() => {
-            userEvent.click(clickableCells[cellIdx]);
-        });
-    }
-
-    expect(clickableCells[7]).toContainHTML('');
+    const unusedCellIdx = 2;
+    expect(clickableCells[unusedCellIdx]).toContainHTML('');
 });
 
 test('if X finishes with a draw, info panel shows their turn and board gets unclickable', () => {
