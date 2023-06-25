@@ -17,6 +17,6 @@ test('renders info panel', () => {
 test('renders board', () => {
   render(<App />);
   const clickableCells = screen.getAllByRole('button');
-  expect(clickableCells).toHaveLength(9);
+  expect(clickableCells).toHaveLength(9); // Assume board dimensions are 3x3
 });
 
