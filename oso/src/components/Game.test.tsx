@@ -63,3 +63,19 @@ test('if O player wins board gets unclickable', () => {
 
     expect(clickableCells[7]).toContainHTML('');
 });
+
+test('if X finishes with a draw, info panel shows their turn and board gets unclickable', () => {
+    render(<Game />)
+
+    const clickableCells = screen.getAllByRole('button');
+
+    for (const cellIdx of [0, 1, 4, 8, 2, 6, 7, 3, 5]) {
+        act(() => {
+            userEvent.click(clickableCells[cellIdx]);
+        });
+    }
+
+    const infoElement = screen.getByText("Next player: O");
+    expect(infoElement).toBeInTheDocument();
+    expect(clickableCells[5]).toContainHTML('X');
+});
