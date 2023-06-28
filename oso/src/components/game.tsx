@@ -10,7 +10,6 @@ const COLS : number = 3;
 
 export default function Game() {
     const [xIsNext, setXIsNext] = useState(true);
-    const [cells, setCells] = useState(Array(ROWS*COLS).fill(null));
     const [history, setHistory] = useState(Array().fill(null));
     const [currentMove, setCurrentMove] = useState(0);
 
@@ -52,7 +51,6 @@ export default function Game() {
 
         const updatedCells = currentCells.slice();
         updatedCells[index] = xIsNext ? 'X' : 'O';
-        setCells(updatedCells);
         updateHistory(updatedCells);
         setXIsNext(!xIsNext);
     }
