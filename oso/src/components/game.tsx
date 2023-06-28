@@ -1,5 +1,6 @@
 import Info from './Info'
 import Board from './Board'
+import History from './History'
 import { createContext, useState } from 'react';
 
 export const GameContext = createContext<Array<string>>([]);
@@ -10,7 +11,9 @@ const COLS : number = 3;
 export default function Game() {
     const [xIsNext, setXIsNext] = useState(true);
     const [cells, setCells] = useState(Array(ROWS*COLS).fill(null));
+    const [history, setHistory] = useState(Array().fill(null));
 
+    const currentMove = history[history.length - 1];
     const winnerToken = calculateWinner(cells);
     const status = getStatus(winnerToken);
 
@@ -34,6 +37,12 @@ export default function Game() {
         return !!winnerToken ;
     }
 
+    function updateHistory(updatedCells: Array<string>) {
+        const updatedHistory = history.slice();
+        updatedHistory.push(updatedCells);
+        setHistory(updatedHistory);
+    }
+
     function onBoardClick(index: number): void {
         if (isThereAWinner() || isCellFilled(index)) {
             return;
@@ -42,8 +51,12 @@ export default function Game() {
         const updatedCells = cells.slice();
         updatedCells[index] = xIsNext ? 'X' : 'O';
         setCells(updatedCells);
-
+        updateHistory(updatedCells);
         setXIsNext(!xIsNext);
+    }
+
+    function jumpTo(move: number): void {
+        console.log("Jump to: ", move);
     }
 
     return (
@@ -54,6 +67,7 @@ export default function Game() {
                 <h1>OSO game</h1>
                 <Info status={status} />
                 <Board rows={ROWS} cols={COLS} onClick={onBoardClick} />
+                <History history={history} jumpTo={jumpTo} />
             </GameContext.Provider>
         </>
     );
