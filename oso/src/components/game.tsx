@@ -14,8 +14,8 @@ export default function Game() {
     const [history, setHistory] = useState(Array().fill(null));
     const [currentMove, setCurrentMove] = useState(0);
 
-    const currentCells = history[history.length - 1];
-    const winnerToken = calculateWinner(cells);
+    const currentCells = history[currentMove] || [];
+    const winnerToken = calculateWinner(currentCells);
     const status = getStatus(winnerToken);
 
     function getNextPlayerToken(): string {
@@ -31,7 +31,7 @@ export default function Game() {
     }
 
     function isCellFilled(index: number): boolean {
-        return !!cells[index];
+        return !!currentCells[index];
     }
 
     function isThereAWinner(): boolean {
@@ -39,8 +39,9 @@ export default function Game() {
     }
 
     function updateHistory(updatedCells: Array<string>) {
-        const updatedHistory = history.slice();
+        const updatedHistory = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
+        setCurrentMove(updatedHistory.length - 1);
         setHistory(updatedHistory);
     }
 
@@ -49,7 +50,7 @@ export default function Game() {
             return;
         }
 
-        const updatedCells = cells.slice();
+        const updatedCells = currentCells.slice();
         updatedCells[index] = xIsNext ? 'X' : 'O';
         setCells(updatedCells);
         updateHistory(updatedCells);
@@ -64,7 +65,7 @@ export default function Game() {
     return (
         <>
             <GameContext.Provider
-                value={cells}
+                value={currentCells}
             >
                 <h1>OSO game</h1>
                 <Info status={status} />
