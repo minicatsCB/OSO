@@ -12,8 +12,9 @@ export default function Game() {
     const [xIsNext, setXIsNext] = useState(true);
     const [cells, setCells] = useState(Array(ROWS*COLS).fill(null));
     const [history, setHistory] = useState(Array().fill(null));
+    const [currentMove, setCurrentMove] = useState(0);
 
-    const currentMove = history[history.length - 1];
+    const currentCells = history[history.length - 1];
     const winnerToken = calculateWinner(cells);
     const status = getStatus(winnerToken);
 
@@ -56,7 +57,8 @@ export default function Game() {
     }
 
     function jumpTo(move: number): void {
-        console.log("Jump to: ", move);
+        setCurrentMove(move);
+        setXIsNext(move % 2 === 0);
     }
 
     return (
