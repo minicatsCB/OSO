@@ -17,27 +17,17 @@ export default function Game() {
     
     const currentCells = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
+    const nextPlayerToken = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
     const winner = calculateWinner(currentCells);
-
-    function getNextPlayerToken(): string {
-        return (xIsNext ? FIRST_PLAYER : SECOND_PLAYER);
-    }
-
-    function getStatus(): string  {
-        if (winner) {
-            return `Winner: ${winner}`;
-        } else {
-            return `Next player: ${getNextPlayerToken()}`;
-        }
-    }
-
+    const status = winner ? `Winner: ${winner}` : `Next player: ${nextPlayerToken}`;
+    const historyLength = history.every(record => record.length === 0) ? 0 : history.length;
     function isCellFilled(index: number): boolean {
         return !!currentCells[index];
     }
 
     function updateHistory(index: number) {
         const updatedCells = currentCells.slice();
-        updatedCells[index] = getNextPlayerToken();
+        updatedCells[index] = nextPlayerToken;
 
         const updatedHistory = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
@@ -57,19 +47,15 @@ export default function Game() {
         setCurrentMove(move);
     }
 
-    function getHistoryLength(): number {
-        return history.every(record => record.length === 0) ? 0 : history.length;
-    }
-
     return (
         <>
             <GameContext.Provider
                 value={currentCells}
             >
                 <h1>OSO game</h1>
-                <Info status={getStatus()} />
+                <Info status={status} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
-                <History length={getHistoryLength()} onJump={handleJump} />
+                <History length={historyLength} onJump={handleJump} />
             </GameContext.Provider>
         </>
     );
