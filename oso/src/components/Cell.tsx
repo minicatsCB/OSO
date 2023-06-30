@@ -3,7 +3,8 @@ import { useContext } from 'react';
 import { GameContext } from './Game';
 
 const Button = styled.button`
-
+    background-color: white;
+    font-size: 4rem;
 `;
 
 export default function Cell({className, index, onClick}: any) {
