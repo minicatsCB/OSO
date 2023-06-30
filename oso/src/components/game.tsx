@@ -9,10 +9,10 @@ const ROWS : number = 3;
 const COLS : number = 3;
 
 export default function Game() {
-    const [history, setHistory] = useState(Array(9).fill(null));
+    const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
     
-    const currentCells = history[currentMove] || [];
+    const currentCells = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
     const winnerToken = calculateWinner(currentCells);
     const status = getStatus(winnerToken);
