@@ -26,9 +26,9 @@ export default function Game() {
 
     function getStatus(winner: string): string  {
         if (winner) {
-            return 'Winner: ' + winner;
+            return `Winner: ${winner}`;
         } else {
-            return 'Next player: ' + getNextPlayerToken();
+            return `Next player: ${getNextPlayerToken()}`;
         }
     }
 
