@@ -11,7 +11,7 @@ test('if X player wins info status reflect it and board gets unclickable', () =>
 
     const clickableCells = screen.getAllByRole('button');
 
-    for (const cellIdx of [0, 1, 4, 8, 6, 3, 2]) {
+    for (const cellIdx of [0, 1, 4, 8, 6, 3, 2]) {  // X clicks cell 0, O clicks cell 1, X clicks cell 4 .. X clicks cell 2
         act(() => {
             userEvent.click(clickableCells[cellIdx]);
         });
