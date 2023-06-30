@@ -9,7 +9,7 @@ test('renders 1x1 board correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells = screen.getAllByRole('button');
+    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 });
 
@@ -20,7 +20,7 @@ test('renders 3x3 board correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells = screen.getAllByRole('button');
+    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 });
 
@@ -31,7 +31,7 @@ test('renders 5x3 board correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells = screen.getAllByRole('button');
+    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 });
 
@@ -43,7 +43,7 @@ test('click one board cell correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells = screen.getAllByRole('button');
+    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 
     fireEvent.click(clickableCells[0]);

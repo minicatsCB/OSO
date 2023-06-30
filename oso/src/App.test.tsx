@@ -4,19 +4,19 @@ import App from './App';
 
 test('renders title', () => {
   render(<App />);
-  const titleElement = screen.getByText(/OSO game/i);
-  expect(titleElement).toBeInTheDocument();
+  const title: HTMLElement = screen.getByText(/OSO game/i);
+  expect(title).toBeInTheDocument();
 });
 
 test('renders info panel', () => {
   render(<App />);
-  const infoElement = screen.getByText(/Next player:/i);
-  expect(infoElement).toBeInTheDocument();
+  const info: HTMLElement = screen.getByText(/Next player:/i);
+  expect(info).toBeInTheDocument();
 });
 
 test('renders board', () => {
   render(<App />);
-  const clickableCells = screen.getAllByRole('button');
+  const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
   expect(clickableCells.length).toBeGreaterThanOrEqual(1);
 });
 
