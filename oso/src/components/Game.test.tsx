@@ -112,3 +112,29 @@ test('shows correct cells if a history record is selected', () => {
         expect(clickableCells[cellIdx]).toHaveTextContent(lastContext[cellIdx]);
     }
 });
+
+test('shows correct history if player goes back and win in less moves', () => {
+    render(<Game />)
+
+    let clickableCells = screen.getAllByRole('button');
+
+    for (const cellIdx of [0, 3, 8, 5, 7, 6, 1, 2, 4]) {    // Unnecessary long game
+        act(() => {
+            userEvent.click(clickableCells[cellIdx]);
+        });
+    }
+
+    let movesBtns = screen.queryAllByText("Go to move", { exact: false });
+    expect(movesBtns).toHaveLength(9);
+    
+    act(() => {
+        userEvent.click(movesBtns[3]);  // Go back in time
+    });
+
+    act(() => {
+        userEvent.click(clickableCells[4]); // Win faster
+    });
+
+    movesBtns = screen.queryAllByText("Go to move", { exact: false });
+    expect(movesBtns).toHaveLength(5);
+});
