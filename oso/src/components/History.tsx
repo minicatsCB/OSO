@@ -1,4 +1,4 @@
-export default function History({ history, jumpTo }: any) {
+export default function History({ history, onJump }: any) {
     return (
         <>
             <h1>History</h1>
@@ -7,7 +7,7 @@ export default function History({ history, jumpTo }: any) {
                     const description = move > 0 ? `Go to move #${move}` : 'Go to game start';
                     return (
                         <li key={move}>
-                            <button onClick={() => jumpTo(move)}>{description}</button>
+                            <button onClick={() => onJump(move)}>{description}</button>
                         </li>
                     );
                 })}

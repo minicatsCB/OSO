@@ -42,19 +42,19 @@ export default function Game() {
 
         const updatedHistory = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
-        
+
         setHistory(updatedHistory);
         setCurrentMove(updatedHistory.length - 1);
     }
 
-    function onBoardClick(index: number): void {
+    function handleBoardClick(index: number): void {
         if (winner || isCellFilled(index)) {
             return;
         }
         updateHistory(index);
     }
 
-    function jumpTo(move: number): void {
+    function handleJump(move: number): void {
         setCurrentMove(move);
     }
 
@@ -65,8 +65,8 @@ export default function Game() {
             >
                 <h1>OSO game</h1>
                 <Info status={status} />
-                <Board rows={ROWS} cols={COLS} onClick={onBoardClick} />
-                <History history={history} jumpTo={jumpTo} />
+                <Board rows={ROWS} cols={COLS} onClick={handleBoardClick} />
+                <History history={history} onJump={handleJump} />
             </GameContext.Provider>
         </>
     );
