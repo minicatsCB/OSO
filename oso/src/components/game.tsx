@@ -18,13 +18,12 @@ export default function Game() {
     const currentCells = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
     const winner = calculateWinner(currentCells);
-    const status = getStatus(winner);
 
     function getNextPlayerToken(): string {
         return (xIsNext ? FIRST_PLAYER : SECOND_PLAYER);
     }
 
-    function getStatus(winner: string): string  {
+    function getStatus(): string  {
         if (winner) {
             return `Winner: ${winner}`;
         } else {
@@ -64,7 +63,7 @@ export default function Game() {
                 value={currentCells}
             >
                 <h1>OSO game</h1>
-                <Info status={status} />
+                <Info status={getStatus()} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History history={history} onJump={handleJump} />
             </GameContext.Provider>
