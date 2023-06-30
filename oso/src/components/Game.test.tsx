@@ -94,32 +94,21 @@ test('shows correct cells if a history record is selected', () => {
     }
 
     const movesBtns = screen.queryAllByText("Go to move", { exact: false });
-    const lastCells = clickableCells.map(cellEl => cellEl.innerHTML);
     act(() => {
         userEvent.click(movesBtns[2]);
     });
 
-    expect(clickableCells[0]).toHaveTextContent('X');
-    expect(clickableCells[1]).toHaveTextContent('O');
-    expect(clickableCells[2]).toHaveTextContent('');
-    expect(clickableCells[3]).toHaveTextContent('');
-    expect(clickableCells[4]).toHaveTextContent('X');
-    expect(clickableCells[5]).toHaveTextContent('');
-    expect(clickableCells[6]).toHaveTextContent('');
-    expect(clickableCells[7]).toHaveTextContent('');
-    expect(clickableCells[8]).toHaveTextContent('');
+    const moveContext = ['X', 'O', '', '', 'X', '', '', '', ''];
+    for (let cellIdx = 0; cellIdx < clickableCells.length; cellIdx++) {
+        expect(clickableCells[cellIdx]).toHaveTextContent(moveContext[cellIdx]);
+    }
 
     act(() => {
         userEvent.click(movesBtns[movesBtns.length - 1]);   // Return to the last move
     });
 
-    expect(clickableCells[0]).toHaveTextContent('X');
-    expect(clickableCells[1]).toHaveTextContent('O');
-    expect(clickableCells[2]).toHaveTextContent('X');
-    expect(clickableCells[3]).toHaveTextContent('O');
-    expect(clickableCells[4]).toHaveTextContent('X');
-    expect(clickableCells[5]).toHaveTextContent('');
-    expect(clickableCells[6]).toHaveTextContent('X');
-    expect(clickableCells[7]).toHaveTextContent('');
-    expect(clickableCells[8]).toHaveTextContent('O');
+    const lastContext = ['X', 'O', 'X', 'O', 'X', '', 'X', '', 'O'];
+    for (let cellIdx = 0; cellIdx < clickableCells.length; cellIdx++) {
+        expect(clickableCells[cellIdx]).toHaveTextContent(lastContext[cellIdx]);
+    }
 });
