@@ -15,20 +15,20 @@ export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
     
-    const currentCells: Array<string> = history[currentMove];
+    const cells: Array<string> = history[currentMove];
     const xIsNext: boolean = currentMove % 2 === 0;
-    const nextPlayerToken: string = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
-    const winner: string = calculateWinner(currentCells);
-    const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayerToken}`;
+    const nextPlayer: string = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
+    const winner: string = calculateWinner(cells);
+    const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
     const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
     
     function isCellFilled(index: number): boolean {
-        return !!currentCells[index];
+        return !!cells[index];
     }
 
     function updateHistory(index: number): void {
-        const updatedCells: Array<string> = currentCells.slice();
-        updatedCells[index] = nextPlayerToken;
+        const updatedCells: Array<string> = cells.slice();
+        updatedCells[index] = nextPlayer;
 
         const updatedHistory: Array<Array<string>> = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
@@ -51,7 +51,7 @@ export default function Game() {
     return (
         <>
             <GameContext.Provider
-                value={currentCells}
+                value={cells}
             >
                 <h1>OSO game</h1>
                 <Info status={status} />
