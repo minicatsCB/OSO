@@ -10,7 +10,7 @@ const COLS : number = 3;
 
 export default function Game() {
     const [xIsNext, setXIsNext] = useState(true);
-    const [history, setHistory] = useState(Array().fill(null));
+    const [history, setHistory] = useState(Array(9).fill(null));
     const [currentMove, setCurrentMove] = useState(0);
 
     const currentCells = history[currentMove] || [];
