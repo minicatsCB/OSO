@@ -57,3 +57,27 @@ test('if X finishes with a draw, info panel shows their turn and board gets uncl
     expect(infoElement).toBeInTheDocument();
     expect(clickableCells[5]).toContainHTML('X');
 });
+
+test('renders history according to game state', () => {
+    render(<Game />)
+
+    let goToGameStartBtn = screen.queryByText("Go to game start");
+    expect(goToGameStartBtn).not.toBeInTheDocument();
+
+    let movesBtns = screen.queryAllByText("Go to move", { exact: false });
+    expect(movesBtns).toHaveLength(0);
+
+    const clickableCells = screen.getAllByRole('button');
+
+    for (const cellIdx of [0, 1, 4, 8, 6, 3, 2]) {
+        act(() => {
+            userEvent.click(clickableCells[cellIdx]);
+        });
+    }
+
+    goToGameStartBtn = screen.queryByText("Go to game start");
+    expect(goToGameStartBtn).toBeInTheDocument();
+
+    movesBtns = screen.queryAllByText("Go to move", { exact: false });
+    expect(movesBtns).toHaveLength(7);
+});
