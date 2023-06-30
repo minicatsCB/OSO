@@ -21,7 +21,7 @@ test('if X player wins info status reflect it and board gets unclickable', () =>
     expect(infoElement).toBeInTheDocument();
 
     const unusedCellIdx = 7;
-    expect(clickableCells[unusedCellIdx]).toContainHTML('');
+    expect(clickableCells[unusedCellIdx]).toHaveTextContent('');
 });
 
 test('if O player wins info status reflect it and board gets unclickable', () => {
@@ -39,7 +39,7 @@ test('if O player wins info status reflect it and board gets unclickable', () =>
     expect(infoElement).toBeInTheDocument();
 
     const unusedCellIdx = 2;
-    expect(clickableCells[unusedCellIdx]).toContainHTML('');
+    expect(clickableCells[unusedCellIdx]).toHaveTextContent('');
 });
 
 test('if X finishes with a draw, info panel shows their turn and board gets unclickable', () => {
@@ -55,7 +55,7 @@ test('if X finishes with a draw, info panel shows their turn and board gets uncl
 
     const infoElement = screen.getByText("Next player: O");
     expect(infoElement).toBeInTheDocument();
-    expect(clickableCells[5]).toContainHTML('X');
+    expect(clickableCells[5]).toHaveTextContent('X');
 });
 
 test('renders history according to game state', () => {
@@ -99,27 +99,27 @@ test('shows correct cells if a history record is selected', () => {
         userEvent.click(movesBtns[2]);
     });
 
-    expect(clickableCells[0]).toContainHTML('X');
-    expect(clickableCells[1]).toContainHTML('O');
-    expect(clickableCells[2]).toContainHTML('');
-    expect(clickableCells[3]).toContainHTML('');
-    expect(clickableCells[4]).toContainHTML('X');
-    expect(clickableCells[5]).toContainHTML('');
-    expect(clickableCells[6]).toContainHTML('');
-    expect(clickableCells[7]).toContainHTML('');
-    expect(clickableCells[8]).toContainHTML('');
+    expect(clickableCells[0]).toHaveTextContent('X');
+    expect(clickableCells[1]).toHaveTextContent('O');
+    expect(clickableCells[2]).toHaveTextContent('');
+    expect(clickableCells[3]).toHaveTextContent('');
+    expect(clickableCells[4]).toHaveTextContent('X');
+    expect(clickableCells[5]).toHaveTextContent('');
+    expect(clickableCells[6]).toHaveTextContent('');
+    expect(clickableCells[7]).toHaveTextContent('');
+    expect(clickableCells[8]).toHaveTextContent('');
 
     act(() => {
         userEvent.click(movesBtns[movesBtns.length - 1]);   // Return to the last move
     });
 
-    expect(clickableCells[0]).toContainHTML('X');
-    expect(clickableCells[1]).toContainHTML('O');
-    expect(clickableCells[2]).toContainHTML('X');
-    expect(clickableCells[3]).toContainHTML('O');
-    expect(clickableCells[4]).toContainHTML('X');
-    expect(clickableCells[5]).toContainHTML('');
-    expect(clickableCells[6]).toContainHTML('X');
-    expect(clickableCells[7]).toContainHTML('');
-    expect(clickableCells[8]).toContainHTML('O');
+    expect(clickableCells[0]).toHaveTextContent('X');
+    expect(clickableCells[1]).toHaveTextContent('O');
+    expect(clickableCells[2]).toHaveTextContent('X');
+    expect(clickableCells[3]).toHaveTextContent('O');
+    expect(clickableCells[4]).toHaveTextContent('X');
+    expect(clickableCells[5]).toHaveTextContent('');
+    expect(clickableCells[6]).toHaveTextContent('X');
+    expect(clickableCells[7]).toHaveTextContent('');
+    expect(clickableCells[8]).toHaveTextContent('O');
 });
