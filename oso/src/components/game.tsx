@@ -21,7 +21,7 @@ export default function Game() {
         return (xIsNext ? 'X' : 'O');
     }
 
-    function getStatus(winnerToken: string | null): string  {
+    function getStatus(winnerToken: string): string  {
         if (winnerToken) {
             return 'Winner: ' + winnerToken;
         } else {
@@ -72,7 +72,7 @@ export default function Game() {
     );
 }
 
-function calculateWinner(cells: Array<string>): string | null {
+function calculateWinner(cells: Array<string>): string {
     const winLines = [
       [0, 1, 2],
       [3, 4, 5],
@@ -89,5 +89,5 @@ function calculateWinner(cells: Array<string>): string | null {
         return cells[a];
       }
     }
-    return null;
+    return '';
   }
