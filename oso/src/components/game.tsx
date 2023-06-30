@@ -36,10 +36,6 @@ export default function Game() {
         return !!currentCells[index];
     }
 
-    function isThereAWinner(): boolean {
-        return !!winner ;
-    }
-
     function updateHistory(updatedCells: Array<string>) {
         const updatedHistory = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
@@ -48,7 +44,7 @@ export default function Game() {
     }
 
     function onBoardClick(index: number): void {
-        if (isThereAWinner() || isCellFilled(index)) {
+        if (winner || isCellFilled(index)) {
             return;
         }
 
