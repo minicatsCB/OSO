@@ -47,7 +47,7 @@ export default function Game() {
         setCurrentMove(updatedHistory.length - 1);
     }
 
-    function handleBoardClick(index: number): void {
+    function handlePlay(index: number): void {
         if (winner || isCellFilled(index)) {
             return;
         }
@@ -65,7 +65,7 @@ export default function Game() {
             >
                 <h1>OSO game</h1>
                 <Info status={status} />
-                <Board rows={ROWS} cols={COLS} onBoardClick={handleBoardClick} />
+                <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History history={history} onJump={handleJump} />
             </GameContext.Provider>
         </>
