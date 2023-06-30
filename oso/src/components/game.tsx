@@ -8,6 +8,9 @@ export const GameContext = createContext<Array<string>>([]);
 const ROWS : number = 3;
 const COLS : number = 3;
 
+const  X_TOKEN : string = 'X';
+const  O_TOKEN : string = 'O';
+
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
@@ -18,7 +21,7 @@ export default function Game() {
     const status = getStatus(winnerToken);
 
     function getNextPlayerToken(): string {
-        return (xIsNext ? 'X' : 'O');
+        return (xIsNext ? X_TOKEN : O_TOKEN);
     }
 
     function getStatus(winnerToken: string): string  {
@@ -50,7 +53,7 @@ export default function Game() {
         }
 
         const updatedCells = currentCells.slice();
-        updatedCells[index] = xIsNext ? 'X' : 'O';
+        updatedCells[index] = xIsNext ? X_TOKEN : O_TOKEN;
         updateHistory(updatedCells);
     }
 
