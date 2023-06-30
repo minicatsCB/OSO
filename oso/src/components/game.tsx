@@ -36,9 +36,13 @@ export default function Game() {
         return !!currentCells[index];
     }
 
-    function updateHistory(updatedCells: Array<string>) {
+    function updateHistory(index: number) {
+        const updatedCells = currentCells.slice();
+        updatedCells[index] = getNextPlayerToken();
+
         const updatedHistory = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
+        
         setHistory(updatedHistory);
         setCurrentMove(updatedHistory.length - 1);
     }
@@ -47,10 +51,7 @@ export default function Game() {
         if (winner || isCellFilled(index)) {
             return;
         }
-
-        const updatedCells = currentCells.slice();
-        updatedCells[index] = getNextPlayerToken();
-        updateHistory(updatedCells);
+        updateHistory(index);
     }
 
     function jumpTo(move: number): void {
