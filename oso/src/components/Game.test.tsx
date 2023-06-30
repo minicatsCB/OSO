@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 // Example of draw context: ['X', 'O', 'X', 'X', 'X', 'O', 'O', 'X', 'O']
 // Note: X alwasy starts the game
 
-test('if X player wins info status reflect it and board gets unclickable', () => {
+test('if X player wins info status reflects it and board gets unclickable', () => {
     render(<Game />)
 
     const clickableCells = screen.getAllByRole('button');
@@ -20,11 +20,10 @@ test('if X player wins info status reflect it and board gets unclickable', () =>
     const infoElement = screen.getByText("Winner: X");
     expect(infoElement).toBeInTheDocument();
 
-    const unusedCellIdx = 7;
-    expect(clickableCells[unusedCellIdx]).toHaveTextContent('');
+    expect(clickableCells[7]).toHaveTextContent('');
 });
 
-test('if O player wins info status reflect it and board gets unclickable', () => {
+test('if O player wins info status reflects it and board gets unclickable', () => {
     render(<Game />)
 
     const clickableCells = screen.getAllByRole('button');
@@ -38,11 +37,10 @@ test('if O player wins info status reflect it and board gets unclickable', () =>
     const infoElement = screen.getByText("Winner: O");
     expect(infoElement).toBeInTheDocument();
 
-    const unusedCellIdx = 2;
-    expect(clickableCells[unusedCellIdx]).toHaveTextContent('');
+    expect(clickableCells[2]).toHaveTextContent('');
 });
 
-test('if X finishes with a draw, info panel shows their turn and board gets unclickable', () => {
+test('if X finishes with a draw, info panel shows correct turn and board gets unclickable', () => {
     render(<Game />)
 
     const clickableCells = screen.getAllByRole('button');
@@ -85,7 +83,7 @@ test('renders history according to game state', () => {
 test('shows correct cells if a history record is selected', () => {
     render(<Game />)
 
-    let clickableCells = screen.getAllByRole('button');
+    const clickableCells = screen.getAllByRole('button');
 
     for (const cellIdx of [0, 1, 4, 8, 6, 3, 2]) {
         act(() => {
