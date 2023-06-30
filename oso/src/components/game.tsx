@@ -53,7 +53,7 @@ export default function Game() {
         }
 
         const updatedCells = currentCells.slice();
-        updatedCells[index] = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
+        updatedCells[index] = getNextPlayerToken();
         updateHistory(updatedCells);
     }
 
