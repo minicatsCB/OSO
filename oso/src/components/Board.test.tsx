@@ -7,7 +7,7 @@ test('renders 1x1 board correctly', () => {
     const COLS: number = 1;
     const handleBoardClick = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onClick={handleBoardClick} />);
+    render(<Board rows={ROWS} cols={COLS} onBoardClick={handleBoardClick} />);
 
     const clickableCells = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
@@ -18,7 +18,7 @@ test('renders 3x3 board correctly', () => {
     const COLS: number = 3;
     const handleBoardClick = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onClick={handleBoardClick} />);
+    render(<Board rows={ROWS} cols={COLS} onBoardClick={handleBoardClick} />);
 
     const clickableCells = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
@@ -29,7 +29,7 @@ test('renders 5x3 board correctly', () => {
     const COLS: number = 3;
     const handleBoardClick = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onClick={handleBoardClick} />);
+    render(<Board rows={ROWS} cols={COLS} onBoardClick={handleBoardClick} />);
 
     const clickableCells = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
@@ -41,7 +41,7 @@ test('click one board cell correctly', () => {
     const COLS: number = 3;
     const handleBoardClick = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onClick={handleBoardClick} />);
+    render(<Board rows={ROWS} cols={COLS} onBoardClick={handleBoardClick} />);
 
     const clickableCells = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);

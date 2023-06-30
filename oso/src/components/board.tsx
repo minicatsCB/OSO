@@ -14,7 +14,7 @@ function generateGrid(rows: number, cols: number): Array<Array<string>> {
     return new Array(rows).fill(0).map(() => new Array(cols).fill(0));
 }
 
-export default function Board({rows, cols, onClick} : any) {
+export default function Board({rows, cols, onBoardClick} : any) {
     const grid = generateGrid(rows, cols);
 
     return (
@@ -23,7 +23,7 @@ export default function Board({rows, cols, onClick} : any) {
                 row.map((col: string, colIdx: number) => {
                     const cellIdx = (rowIdx * cols) + colIdx;
                     return (
-                        <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={() => onClick(cellIdx)}></Cell>
+                        <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={() => onBoardClick(cellIdx)}></Cell>
                     )
                 })
             )}

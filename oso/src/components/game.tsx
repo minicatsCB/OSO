@@ -65,7 +65,7 @@ export default function Game() {
             >
                 <h1>OSO game</h1>
                 <Info status={status} />
-                <Board rows={ROWS} cols={COLS} onClick={handleBoardClick} />
+                <Board rows={ROWS} cols={COLS} onBoardClick={handleBoardClick} />
                 <History history={history} onJump={handleJump} />
             </GameContext.Provider>
         </>
