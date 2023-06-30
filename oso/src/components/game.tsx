@@ -57,6 +57,10 @@ export default function Game() {
         setCurrentMove(move);
     }
 
+    function getHistoryLength(): number {
+        return history.every(record => record.length === 0) ? 0 : history.length;
+    }
+
     return (
         <>
             <GameContext.Provider
@@ -65,7 +69,7 @@ export default function Game() {
                 <h1>OSO game</h1>
                 <Info status={getStatus()} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
-                <History history={history} onJump={handleJump} />
+                <History length={getHistoryLength()} onJump={handleJump} />
             </GameContext.Provider>
         </>
     );
