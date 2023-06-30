@@ -15,21 +15,22 @@ export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
     
-    const currentCells = history[currentMove];
-    const xIsNext = currentMove % 2 === 0;
-    const nextPlayerToken = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
-    const winner = calculateWinner(currentCells);
-    const status = winner ? `Winner: ${winner}` : `Next player: ${nextPlayerToken}`;
-    const historyLength = history.every(record => record.length === 0) ? 0 : history.length;
+    const currentCells: Array<string> = history[currentMove];
+    const xIsNext: boolean = currentMove % 2 === 0;
+    const nextPlayerToken: string = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
+    const winner: string = calculateWinner(currentCells);
+    const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayerToken}`;
+    const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
+    
     function isCellFilled(index: number): boolean {
         return !!currentCells[index];
     }
 
-    function updateHistory(index: number) {
-        const updatedCells = currentCells.slice();
+    function updateHistory(index: number): void {
+        const updatedCells: Array<string> = currentCells.slice();
         updatedCells[index] = nextPlayerToken;
 
-        const updatedHistory = history.slice(0, currentMove + 1);
+        const updatedHistory: Array<Array<string>> = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
 
         setHistory(updatedHistory);
@@ -62,7 +63,7 @@ export default function Game() {
 }
 
 function calculateWinner(cells: Array<string>): string {
-    const winLines = [
+    const winLines: Array<Array<number>> = [
       [0, 1, 2],
       [3, 4, 5],
       [6, 7, 8],
@@ -72,8 +73,9 @@ function calculateWinner(cells: Array<string>): string {
       [0, 4, 8],
       [2, 4, 6],
     ];
-    for (let i = 0; i < winLines.length; i++) {
-      const [a, b, c] = winLines[i];
+
+    for (let i: number = 0; i < winLines.length; i++) {
+      const [a, b, c]: Array<number> = winLines[i];
       if (cells[a] && cells[a] === cells[b] && cells[a] === cells[c]) {
         return cells[a];
       }

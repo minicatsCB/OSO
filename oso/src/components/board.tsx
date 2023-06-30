@@ -15,13 +15,13 @@ function generateGrid(rows: number, cols: number): Array<Array<string>> {
 }
 
 export default function Board({rows, cols, onPlay} : any) {
-    const grid = generateGrid(rows, cols);
+    const grid: Array<Array<string>> = generateGrid(rows, cols);
 
     return (
         <StyledGrid $rowsNum={rows} $colsNum={cols} className="container">
             {grid.map((row: Array<string>, rowIdx: number) =>
                 row.map((col: string, colIdx: number) => {
-                    const cellIdx = (rowIdx * cols) + colIdx;
+                    const cellIdx: number = (rowIdx * cols) + colIdx;
                     return (
                         <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={() => onPlay(cellIdx)}></Cell>
                     )
