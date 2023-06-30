@@ -81,3 +81,45 @@ test('renders history according to game state', () => {
     movesBtns = screen.queryAllByText("Go to move", { exact: false });
     expect(movesBtns).toHaveLength(7);
 });
+
+test('shows correct cells if a history record is selected', () => {
+    render(<Game />)
+
+    let clickableCells = screen.getAllByRole('button');
+
+    for (const cellIdx of [0, 1, 4, 8, 6, 3, 2]) {
+        act(() => {
+            userEvent.click(clickableCells[cellIdx]);
+        });
+    }
+
+    const movesBtns = screen.queryAllByText("Go to move", { exact: false });
+    const lastCells = clickableCells.map(cellEl => cellEl.innerHTML);
+    act(() => {
+        userEvent.click(movesBtns[2]);
+    });
+
+    expect(clickableCells[0]).toContainHTML('X');
+    expect(clickableCells[1]).toContainHTML('O');
+    expect(clickableCells[2]).toContainHTML('');
+    expect(clickableCells[3]).toContainHTML('');
+    expect(clickableCells[4]).toContainHTML('X');
+    expect(clickableCells[5]).toContainHTML('');
+    expect(clickableCells[6]).toContainHTML('');
+    expect(clickableCells[7]).toContainHTML('');
+    expect(clickableCells[8]).toContainHTML('');
+
+    act(() => {
+        userEvent.click(movesBtns[movesBtns.length - 1]);   // Return to the last move
+    });
+
+    expect(clickableCells[0]).toContainHTML('X');
+    expect(clickableCells[1]).toContainHTML('O');
+    expect(clickableCells[2]).toContainHTML('X');
+    expect(clickableCells[3]).toContainHTML('O');
+    expect(clickableCells[4]).toContainHTML('X');
+    expect(clickableCells[5]).toContainHTML('');
+    expect(clickableCells[6]).toContainHTML('X');
+    expect(clickableCells[7]).toContainHTML('');
+    expect(clickableCells[8]).toContainHTML('O');
+});
