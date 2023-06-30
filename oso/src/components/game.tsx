@@ -40,8 +40,8 @@ export default function Game() {
     function updateHistory(updatedCells: Array<string>) {
         const updatedHistory = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
-        setCurrentMove(updatedHistory.length - 1);
         setHistory(updatedHistory);
+        setCurrentMove(updatedHistory.length - 1);
     }
 
     function onBoardClick(index: number): void {
