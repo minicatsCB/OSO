@@ -9,7 +9,7 @@ export default function History({ history, onJump }: {history: [][], onJump: any
                     const description = move > 0 ? `Go to move #${move}` : 'Go to game start';
                     return (
                         <li key={move}>
-                            <button onClick={() => onJump(move)}>{description}</button>
+                            <button type="button" onClick={() => onJump(move)}>{description}</button>
                         </li>
                     );
                 })}
