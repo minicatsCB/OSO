@@ -9,11 +9,11 @@ const ROWS : number = 3;
 const COLS : number = 3;
 
 export default function Game() {
-    const [xIsNext, setXIsNext] = useState(true);
     const [history, setHistory] = useState(Array(9).fill(null));
     const [currentMove, setCurrentMove] = useState(0);
-
+    
     const currentCells = history[currentMove] || [];
+    const xIsNext = currentMove % 2 === 0;
     const winnerToken = calculateWinner(currentCells);
     const status = getStatus(winnerToken);
 
@@ -52,12 +52,10 @@ export default function Game() {
         const updatedCells = currentCells.slice();
         updatedCells[index] = xIsNext ? 'X' : 'O';
         updateHistory(updatedCells);
-        setXIsNext(!xIsNext);
     }
 
     function jumpTo(move: number): void {
         setCurrentMove(move);
-        setXIsNext(move % 2 === 0);
     }
 
     return (
