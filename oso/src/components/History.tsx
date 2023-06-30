@@ -1,9 +1,11 @@
-export default function History({ history, onJump }: any) {
+export default function History({ history, onJump }: {history: [][], onJump: any}) {
+    const historyIsEmpty: boolean = history.every(record => record.length === 0);
+
     return (
         <>
             <h1>History</h1>
             <ol>
-                {history.map((cells: Array<string>, move: number) => {
+                {!historyIsEmpty && history.map((cells: Array<string>, move: number) => {
                     const description = move > 0 ? `Go to move #${move}` : 'Go to game start';
                     return (
                         <li key={move}>
