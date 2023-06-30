@@ -17,16 +17,16 @@ export default function Game() {
     
     const currentCells = history[currentMove];
     const xIsNext = currentMove % 2 === 0;
-    const winnerToken = calculateWinner(currentCells);
-    const status = getStatus(winnerToken);
+    const winner = calculateWinner(currentCells);
+    const status = getStatus(winner);
 
     function getNextPlayerToken(): string {
         return (xIsNext ? FIRST_PLAYER : SECOND_PLAYER);
     }
 
-    function getStatus(winnerToken: string): string  {
-        if (winnerToken) {
-            return 'Winner: ' + winnerToken;
+    function getStatus(winner: string): string  {
+        if (winner) {
+            return 'Winner: ' + winner;
         } else {
             return 'Next player: ' + getNextPlayerToken();
         }
@@ -37,7 +37,7 @@ export default function Game() {
     }
 
     function isThereAWinner(): boolean {
-        return !!winnerToken ;
+        return !!winner ;
     }
 
     function updateHistory(updatedCells: Array<string>) {
