@@ -1,16 +1,22 @@
 import calculateWinner from "./algorithm";
 import { markIsValid } from "./algorithm";
 
+// Deprecated: this function stills works under tic-tac-toe rules
+// TODO: modify it to follo OSO rules
 test('X wins', () => {
     const cells: Array<string> = ['X', 'O', 'X', '', 'X', '', 'X', 'O', 'O'];
     expect(calculateWinner(cells)).toBe('X');
 });
 
+// Deprecated: this function stills works under tic-tac-toe rules
+// TODO: modify it to follo OSO rules
 test('O wins', () => {
     const cells: Array<string> = ['X', 'O', 'X', '', 'X', '', 'O', 'O', 'O'];
     expect(calculateWinner(cells)).toBe('O');
 });
 
+// Deprecated: this function stills works under tic-tac-toe rules
+// TODO: modify it to follo OSO rules
 test('Draw', () => {
     const cells: Array<string> = ['X', 'O', 'X', '', 'X', '', 'O', 'X', 'O'];
     expect(calculateWinner(cells)).toBe('');
