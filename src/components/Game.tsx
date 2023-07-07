@@ -3,14 +3,9 @@ import Board from './Board'
 import History from './History'
 import { createContext, useState } from 'react';
 import calculateWinner from '../core/algorithm';
+import { COLS, FIRST_PLAYER, ROWS, SECOND_PLAYER } from '../core/constants';
 
 export const GameContext = createContext<Array<string>>([]);
-
-const ROWS : number = 3;
-const COLS : number = 3;
-
-const  FIRST_PLAYER : string = 'X';
-const  SECOND_PLAYER : string = 'O';
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
