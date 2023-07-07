@@ -1,3 +1,8 @@
+export function markIsValid(markedCells: Array<string>) {
+    if (markedCells.length !== 3) return;
+    return (markedCells[0] === 'O' && markedCells[1] === 'S' && markedCells[2] === 'O');
+}
+
 export default function calculateWinner(cells: Array<string>): string {
     const winLines: Array<Array<number>> = [
       [0, 1, 2],
