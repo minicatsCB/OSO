@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import Cell from './Cell';
-import { GameContext } from './Game';
+import GameContext from '../core/gameContext';
 
 const contextValue: Array<string> = ['X', 'O', 'X', '', 'X', '', 'O', '', 'O'];
 

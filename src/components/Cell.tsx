@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useContext } from 'react';
-import { GameContext } from './Game';
+import GameContext from '../core/gameContext';
 
 const Button = styled.button`
     background-color: white;

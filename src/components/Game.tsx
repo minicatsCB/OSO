@@ -1,11 +1,10 @@
 import Info from './Info'
 import Board from './Board'
 import History from './History'
-import { createContext, useState } from 'react';
+import { useState } from 'react';
 import calculateWinner from '../core/algorithm';
 import { COLS, FIRST_PLAYER, ROWS, SECOND_PLAYER } from '../core/constants';
-
-export const GameContext = createContext<Array<string>>([]);
+import GameContext from '../core/gameContext';
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
