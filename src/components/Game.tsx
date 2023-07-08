@@ -3,7 +3,7 @@ import Board from './Board'
 import History from './History'
 import { useState } from 'react';
 import calculateWinner from '../core/algorithm';
-import { COLS, FIRST_PLAYER, O_TOKEN, ROWS, SECOND_PLAYER, S_TOKEN } from '../core/constants';
+import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
@@ -14,9 +14,9 @@ export default function Game() {
     const [xIsNext, setXIsNext] = useState(true);
     
     const cells: Array<string> = history[currentMove];
-    const nextPlayer: string = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
     const winner: string = calculateWinner(cells);
-    const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
+    const nextPlayerName: string = xIsNext ? FIRST_PLAYER_NAME : SECOND_PLAYER_NAME;
+    const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayerName}`;
     const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
     
     function isCellFilled(index: number): boolean {
