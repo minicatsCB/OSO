@@ -23,7 +23,7 @@ export default function Board({rows, cols, onPlay} : any) {
                 row.map((col: string, colIdx: number) => {
                     const cellIdx: number = (rowIdx * cols) + colIdx;
                     return (
-                        <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={() => onPlay(cellIdx)}></Cell>
+                        <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={onPlay}></Cell>
                     )
                 })
             )}

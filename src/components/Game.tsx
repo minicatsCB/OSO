@@ -3,7 +3,7 @@ import Board from './Board'
 import History from './History'
 import { useState } from 'react';
 import calculateWinner from '../core/algorithm';
-import { COLS, FIRST_PLAYER, ROWS, SECOND_PLAYER } from '../core/constants';
+import { COLS, FIRST_PLAYER, O_TOKEN, ROWS, SECOND_PLAYER, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
 
 export default function Game() {
@@ -11,7 +11,6 @@ export default function Game() {
     const [currentMove, setCurrentMove] = useState(0);
     
     const cells: Array<string> = history[currentMove];
-    const xIsNext: boolean = currentMove % 2 === 0;
     const nextPlayer: string = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
     const winner: string = calculateWinner(cells);
     const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayer}`;
@@ -21,9 +20,9 @@ export default function Game() {
         return !!cells[index];
     }
 
-    function updateHistory(index: number): void {
+    function updateHistory(index: number, token: string): void {
         const updatedCells: Array<string> = cells.slice();
-        updatedCells[index] = nextPlayer;
+        updatedCells[index] = token;
 
         const updatedHistory: Array<Array<string>> = history.slice(0, currentMove + 1);
         updatedHistory.push(updatedCells);
@@ -32,11 +31,13 @@ export default function Game() {
         setCurrentMove(updatedHistory.length - 1);
     }
 
-    function handlePlay(index: number): void {
+    function handlePlay(index: number, timesClicked: number): void {
         if (winner || isCellFilled(index)) {
             return;
         }
-        updateHistory(index);
+
+        const token = timesClicked > 1 ? S_TOKEN : O_TOKEN;
+        updateHistory(index, token);
     }
 
     function handleJump(move: number): void {
