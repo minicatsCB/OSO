@@ -5,10 +5,12 @@ import { useState } from 'react';
 import calculateWinner from '../core/algorithm';
 import { COLS, FIRST_PLAYER, O_TOKEN, ROWS, SECOND_PLAYER, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
+import TurnButton from './TurnButton';
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
+    const [xIsNext, setXIsNext] = useState(true);
     
     const cells: Array<string> = history[currentMove];
     const nextPlayer: string = xIsNext ? FIRST_PLAYER : SECOND_PLAYER;
@@ -28,7 +30,7 @@ export default function Game() {
         updatedHistory.push(updatedCells);
 
         setHistory(updatedHistory);
-        setCurrentMove(updatedHistory.length - 1);
+        setCurrentMove(updatedHistory.length - 1);   
     }
 
     function handlePlay(index: number, timesClicked: number): void {
@@ -44,12 +46,17 @@ export default function Game() {
         setCurrentMove(move);
     }
 
+    function switchTurn(): void {
+        setXIsNext(!xIsNext);
+    }
+
     return (
         <>
             <GameContext.Provider
                 value={cells}
             >
                 <h1>OSO game</h1>
+                <TurnButton onClick={switchTurn}></TurnButton>
                 <Info status={status} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
