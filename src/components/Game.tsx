@@ -6,6 +6,7 @@ import calculateWinner from '../core/algorithm';
 import { COLS, FIRST_PLAYER, O_TOKEN, ROWS, SECOND_PLAYER, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
+import MarkButton from './MarkButton';
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
@@ -50,6 +51,10 @@ export default function Game() {
         setXIsNext(!xIsNext);
     }
 
+    function markWord(): void {
+
+    }
+
     return (
         <>
             <GameContext.Provider
@@ -57,6 +62,7 @@ export default function Game() {
             >
                 <h1>OSO game</h1>
                 <TurnButton onClick={switchTurn}></TurnButton>
+                <MarkButton onClick={markWord}></MarkButton>
                 <Info status={status} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
