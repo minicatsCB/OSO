@@ -8,11 +8,13 @@ import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
+import { Score } from '../core/models';
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
-    const [xIsNext, setXIsNext] = useState(true);
+    const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
+    const [scores, setScores] = useState<Array<Score>>([{player: FIRST_PLAYER_NAME, points: 0}, {player: SECOND_PLAYER_NAME, points: 0}]);
     
     const cells: Array<string> = history[currentMove];
     const winner: string = calculateWinner(cells);
@@ -69,7 +71,7 @@ export default function Game() {
                 <TurnButton onClick={switchTurn}></TurnButton>
                 <MarkButton onClick={markWord}></MarkButton>
                 <EndGameButton onClick={endGame}></EndGameButton>
-                <Info status={status} />
+                <Info activePlayer={activePlayer} scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
             </GameContext.Provider>
