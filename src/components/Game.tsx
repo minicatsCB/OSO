@@ -1,7 +1,7 @@
 import Info from './Info'
 import Board from './Board'
 import History from './History'
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import calculateWinner from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
