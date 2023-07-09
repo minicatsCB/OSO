@@ -52,6 +52,8 @@ export default function Game() {
     }
 
     function markWord(): void {
+        throw Error("method not implemented");
+    }
 
     }
 
