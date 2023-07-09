@@ -49,7 +49,7 @@ export default function Game() {
     }
 
     function switchTurn(): void {
-        setXIsNext(!xIsNext);
+        setActivePlayer(activePlayer === FIRST_PLAYER_NAME ? SECOND_PLAYER_NAME : FIRST_PLAYER_NAME);
     }
 
     function toggleMarker(): void {
