@@ -7,6 +7,7 @@ import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } f
 import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
+import EndGameButton from './EndGameButton';
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
@@ -55,6 +56,8 @@ export default function Game() {
         throw Error("method not implemented");
     }
 
+    function endGame(): void {
+        throw Error("method not implemented");
     }
 
     return (
@@ -65,6 +68,7 @@ export default function Game() {
                 <h1>OSO game</h1>
                 <TurnButton onClick={switchTurn}></TurnButton>
                 <MarkButton onClick={markWord}></MarkButton>
+                <EndGameButton onClick={endGame}></EndGameButton>
                 <Info status={status} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
