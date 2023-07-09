@@ -68,9 +68,11 @@ export default function Game() {
                 value={cells}
             >
                 <h1>OSO game</h1>
+                <div className="commands">
                 <TurnButton onClick={switchTurn}></TurnButton>
                 <MarkButton onClick={markWord}></MarkButton>
                 <EndGameButton onClick={endGame}></EndGameButton>
+                </div>
                 <Info activePlayer={activePlayer} scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
