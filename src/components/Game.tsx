@@ -18,9 +18,6 @@ export default function Game() {
     const canMark = useRef<boolean>(false);
     
     const cells: Array<string> = history[currentMove];
-    const winner: string = calculateWinner(cells);
-    const nextPlayerName: string = xIsNext ? FIRST_PLAYER_NAME : SECOND_PLAYER_NAME;
-    const status: string = winner ? `Winner: ${winner}` : `Next player: ${nextPlayerName}`;
     const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
     
     function isCellFilled(index: number): boolean {
