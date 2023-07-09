@@ -15,6 +15,7 @@ export default function Game() {
     const [currentMove, setCurrentMove] = useState(0);
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [scores, setScores] = useState<Array<Score>>([{player: FIRST_PLAYER_NAME, points: 0}, {player: SECOND_PLAYER_NAME, points: 0}]);
+    const canMark = useRef<boolean>(false);
     
     const cells: Array<string> = history[currentMove];
     const winner: string = calculateWinner(cells);
@@ -54,8 +55,8 @@ export default function Game() {
         setXIsNext(!xIsNext);
     }
 
-    function markWord(): void {
-        throw Error("method not implemented");
+    function toggleMarker(): void {
+        canMark.current = !canMark.current;
     }
 
     function endGame(): void {
@@ -70,7 +71,7 @@ export default function Game() {
                 <h1>OSO game</h1>
                 <div className="commands">
                 <TurnButton onClick={switchTurn}></TurnButton>
-                <MarkButton onClick={markWord}></MarkButton>
+                    <MarkButton onClick={toggleMarker}></MarkButton>
                 <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
                 <Info activePlayer={activePlayer} scores={scores} />
