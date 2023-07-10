@@ -15,7 +15,7 @@ export default function Game() {
     const [currentMove, setCurrentMove] = useState(0);
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [scores, setScores] = useState<Array<Score>>([{player: FIRST_PLAYER_NAME, points: 0}, {player: SECOND_PLAYER_NAME, points: 0}]);
-    const canMark = useRef<boolean>(false);
+    const [canMark, setCanMark] = useState<boolean>(false);
     
     const cells: Array<string> = history[currentMove];
     const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
@@ -53,7 +53,7 @@ export default function Game() {
     }
 
     function toggleMarker(): void {
-        canMark.current = !canMark.current;
+        setCanMark(!canMark);
     }
 
     function endGame(): void {
@@ -67,7 +67,7 @@ export default function Game() {
             >
                 <h1>OSO game</h1>
                 <div className="commands">
-                <TurnButton onClick={switchTurn}></TurnButton>
+                    <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
                     <MarkButton onClick={toggleMarker}></MarkButton>
                 <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
