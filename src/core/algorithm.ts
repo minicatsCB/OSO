@@ -3,6 +3,18 @@ export function markIsValid(markedCells: Array<string>) {
     return (markedCells[0] === 'O' && markedCells[1] === 'S' && markedCells[2] === 'O');
 }
 
+export function* wordMarker(): Generator<number, Array<number>, number> {
+  const wordSize = 3;
+  let clickedCells: Array<number> = [];
+  for (let i = 0; i <= (wordSize - 1); i++) {
+        let cellIdx: number = yield i;
+        if(!cellIdx && cellIdx !== 0) break;
+        clickedCells.push(cellIdx);
+  }
+
+  return clickedCells;
+}
+
 export default function calculateWinner(cells: Array<string>): string {
     const winLines: Array<Array<number>> = [
       [0, 1, 2],
