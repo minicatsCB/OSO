@@ -1,14 +1,17 @@
 import Info from './Info'
 import Board from './Board'
 import History from './History'
-import { useRef, useState } from 'react';
-import calculateWinner from '../core/algorithm';
+import { useState } from 'react';
+import { wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
 import { Score } from '../core/models';
+
+  let generator = wordMarker();
+  generator.next();
 
 export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
@@ -36,12 +39,26 @@ export default function Game() {
     }
 
     function handlePlay(index: number, timesClicked: number): void {
-        if (winner || isCellFilled(index)) {
-            return;
-        }
+        if(canMark) {
+            // TODO: manage case when player is marking but suddenly he toggles the mark button and toggles it again
+            // The generator should start counting from 0, not from the last click
+            let clickedCells = generator.next(index);
+            if (!clickedCells.done) {
+                // We expect another click
+            } else if (clickedCells.value) {
+                // TODO: validate clicked cells
+                // Reset generator
+                generator = wordMarker();
+                generator.next();
+            }
+        } else {
+            if (isCellFilled(index)) {
+                return;
+            }
 
-        const token = timesClicked > 1 ? S_TOKEN : O_TOKEN;
-        updateHistory(index, token);
+            const token = timesClicked > 1 ? S_TOKEN : O_TOKEN;
+            updateHistory(index, token);
+        }
     }
 
     function handleJump(move: number): void {
@@ -57,6 +74,9 @@ export default function Game() {
     }
 
     function endGame(): void {
+        // prevent board from being clicked
+        // calculate winner
+        // show winner
         throw Error("method not implemented");
     }
 
@@ -69,7 +89,7 @@ export default function Game() {
                 <div className="commands">
                     <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
                     <MarkButton onClick={toggleMarker}></MarkButton>
-                <EndGameButton onClick={endGame}></EndGameButton>
+                    <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
                 <Info activePlayer={activePlayer} scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
