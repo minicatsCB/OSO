@@ -40,8 +40,6 @@ export default function Game() {
 
     function handlePlay(index: number, timesClicked: number): void {
         if(canMark) {
-            // TODO: manage case when player is marking but suddenly he toggles the mark button and toggles it again
-            // The generator should start counting from 0, not from the last click
             let clickedCells = generator.next(index);
             if (!clickedCells.done) {
                 // We expect another click
