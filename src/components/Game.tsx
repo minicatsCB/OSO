@@ -38,6 +38,12 @@ export default function Game() {
         setCurrentMove(updatedHistory.length - 1);   
     }
 
+    function updatePlayerScoreBy(playerName: string, increment: number): void {
+        let updatedScores = {...scores}
+        updatedScores[playerName] = updatedScores[playerName] + increment;
+        setScores(updatedScores)
+    }
+
     function handlePlay(index: number, timesClicked: number): void {
         if(canMark) {
             let clickedCells = generator.next(index);
@@ -46,6 +52,9 @@ export default function Game() {
             } else if (clickedCells.value) {
                 const cellsContent = clickedCells.value.map(cellIdx => cells[cellIdx]);
                 const isValid = markIsValid(cellsContent);
+                if (isValid) {
+                    updatePlayerScoreBy(activePlayer, 1);
+                }
                 resetMarker();
             }
         } else {
