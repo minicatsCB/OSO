@@ -69,6 +69,9 @@ export default function Game() {
     }
 
     function toggleMarker(): void {
+        if(canMark) {
+            resetMarker();
+        }
         setCanMark(!canMark);
     }
 
