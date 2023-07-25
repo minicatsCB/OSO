@@ -2,7 +2,7 @@ import Info from './Info'
 import Board from './Board'
 import History from './History'
 import { useState } from 'react';
-import { wordMarker } from '../core/algorithm';
+import { markIsValid, wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
@@ -42,10 +42,10 @@ export default function Game() {
         if(canMark) {
             let clickedCells = generator.next(index);
             if (!clickedCells.done) {
-                // We expect another click
+                // We expect another click. Do nothing.
             } else if (clickedCells.value) {
-                // TODO: validate clicked cells
-                // Reset generator
+                const cellsContent = clickedCells.value.map(cellIdx => cells[cellIdx]);
+                const isValid = markIsValid(cellsContent);
                 resetMarker();
             }
         } else {
