@@ -1,5 +1,7 @@
-export function markIsValid(markedCells: Array<string>) {
-    if (markedCells.length !== 3) return;
+export function markIsValid(markedCells: Array<string>): boolean {
+    if (markedCells.length !== 3) {
+      return false; 
+    }
     return (markedCells[0] === 'O' && markedCells[1] === 'S' && markedCells[2] === 'O');
 }
 
