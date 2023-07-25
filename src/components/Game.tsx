@@ -8,7 +8,7 @@ import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
-import { Score } from '../core/models';
+import { Scores } from '../core/models';
 
   let generator = wordMarker();
   generator.next();
@@ -17,7 +17,7 @@ export default function Game() {
     const [history, setHistory] = useState(Array(9).fill([]));
     const [currentMove, setCurrentMove] = useState(0);
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
-    const [scores, setScores] = useState<Array<Score>>([{player: FIRST_PLAYER_NAME, points: 0}, {player: SECOND_PLAYER_NAME, points: 0}]);
+    const [scores, setScores] = useState<Scores>({[FIRST_PLAYER_NAME]: 0, [SECOND_PLAYER_NAME]: 0});
     const [canMark, setCanMark] = useState<boolean>(false);
     
     const cells: Array<string> = history[currentMove];

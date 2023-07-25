@@ -3,7 +3,7 @@ import Info from './Info';
 
 test('shows info correctly', () => {
     const activePlayer: string = "Claire";
-    const scores = [{player: "Claire", points: 10}, {player: "Danny", points: 6}];
+    const scores = {"Claire": 10, "Danny": 6};
     render(<Info activePlayer={activePlayer} scores={scores} />);
 
     const turn: HTMLElement = screen.getByText(`It's ${activePlayer}'s turn`);

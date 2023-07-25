@@ -1,4 +1,1 @@
-export interface Score {
-    player: string;
-    points: number;
-}
+export type Scores = Record<string, number>;

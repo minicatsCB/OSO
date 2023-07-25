@@ -1,12 +1,12 @@
-import { Score } from "../core/models";
+import { Scores } from "../core/models";
 
-export default function Info({activePlayer, scores}: {activePlayer: string, scores: Array<Score>}) {
+export default function Info({activePlayer, scores}: {activePlayer: string, scores: Scores}) {
     return (
         <>
             <p>It's {activePlayer}'s turn</p>
             <ul>
-                {scores.map((val: Score) => (
-                    <li key={val.player}>{val.player}: {val.points}</li>
+                {Object.keys(scores).map((playerName: string) => (
+                    <li key={playerName}>{playerName}: {scores[playerName]}</li>
                 ))}
             </ul>
         </>
