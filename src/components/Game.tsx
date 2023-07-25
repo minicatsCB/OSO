@@ -48,8 +48,7 @@ export default function Game() {
             } else if (clickedCells.value) {
                 // TODO: validate clicked cells
                 // Reset generator
-                generator = wordMarker();
-                generator.next();
+                resetMarker();
             }
         } else {
             if (isCellFilled(index)) {
@@ -78,6 +77,11 @@ export default function Game() {
         // calculate winner
         // show winner
         throw Error("method not implemented");
+    }
+
+    function resetMarker(): void {
+        generator = wordMarker();
+        generator.next();
     }
 
     return (
