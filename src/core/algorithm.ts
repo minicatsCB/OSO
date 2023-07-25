@@ -6,7 +6,7 @@ export function markIsValid(markedCells: Array<string>) {
 export function* wordMarker(): Generator<number, Array<number>, number> {
   const wordSize = 3;
   let clickedCells: Array<number> = [];
-  for (let i = 0; i <= (wordSize - 1); i++) {
+  for (let i = 0; i < wordSize; i++) {
         let cellIdx: number = yield i;
         if(!cellIdx && cellIdx !== 0) break;
         clickedCells.push(cellIdx);
