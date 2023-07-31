@@ -2,12 +2,8 @@ import { render, screen } from '@testing-library/react';
 import ScorePanel from './ScorePanel';
 
 test('shows info correctly', () => {
-    const activePlayer: string = "Claire";
     const scores = {"Claire": 10, "Danny": 6};
-    render(<ScorePanel activePlayer={activePlayer} scores={scores} />);
-
-    const turn: HTMLElement = screen.getByText(`It's ${activePlayer}'s turn`);
-    expect(turn).toBeInTheDocument();
+    render(<ScorePanel scores={scores} />);
 
     const score1: HTMLElement = screen.getByText("Claire: 10");
     expect(score1).toBeInTheDocument();
