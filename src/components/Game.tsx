@@ -1,4 +1,4 @@
-import Info from './Info'
+import ScorePanel from './ScorePanel'
 import Board from './Board'
 import History from './History'
 import { useState } from 'react';
@@ -105,7 +105,7 @@ export default function Game() {
                     <MarkButton onClick={toggleMarker}></MarkButton>
                     <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
-                <Info activePlayer={activePlayer} scores={scores} />
+                <ScorePanel activePlayer={activePlayer} scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
             </GameContext.Provider>

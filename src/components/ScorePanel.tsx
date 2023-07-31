@@ -1,6 +1,6 @@
 import { Scores } from "../core/models";
 
-export default function Info({activePlayer, scores}: {activePlayer: string, scores: Scores}) {
+export default function ScorePanel({activePlayer, scores}: {activePlayer: string, scores: Scores}) {
     return (
         <>
             <p>It's {activePlayer}'s turn</p>

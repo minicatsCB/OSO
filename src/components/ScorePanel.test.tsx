@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import Info from './Info';
+import ScorePanel from './ScorePanel';
 
 test('shows info correctly', () => {
     const activePlayer: string = "Claire";
     const scores = {"Claire": 10, "Danny": 6};
-    render(<Info activePlayer={activePlayer} scores={scores} />);
+    render(<ScorePanel activePlayer={activePlayer} scores={scores} />);
 
     const turn: HTMLElement = screen.getByText(`It's ${activePlayer}'s turn`);
     expect(turn).toBeInTheDocument();
