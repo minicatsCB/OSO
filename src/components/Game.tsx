@@ -9,6 +9,7 @@ import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
 import { Scores } from '../core/models';
+import Status from './Status';
 
   let generator = wordMarker();
   generator.next();
@@ -105,7 +106,8 @@ export default function Game() {
                     <MarkButton onClick={toggleMarker}></MarkButton>
                     <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
-                <ScorePanel activePlayer={activePlayer} scores={scores} />
+                <Status activePlayer={activePlayer}/>
+                <ScorePanel scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} onJump={handleJump} />
             </GameContext.Provider>
