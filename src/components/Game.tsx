@@ -15,14 +15,14 @@ import Status from './Status';
   generator.next();
 
 export default function Game() {
-    const [history, setHistory] = useState(Array(9).fill([]));
+    const [history, setHistory] = useState<Array<Array<string>>>([]);
     const [currentMove, setCurrentMove] = useState(0);
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [scores, setScores] = useState<Scores>({[FIRST_PLAYER_NAME]: 0, [SECOND_PLAYER_NAME]: 0});
     const [canMark, setCanMark] = useState<boolean>(false);
     
-    const cells: Array<string> = history[currentMove];
     const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
+    const cells: Array<string> = historyLength > 0 ? history[currentMove]: [];
     
     function isCellFilled(index: number): boolean {
         return !!cells[index];
