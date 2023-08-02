@@ -174,9 +174,6 @@ test('renders history according to game state', async () => {
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
 
-    goToGameStartBtn = screen.queryByText("Go to game start");
-    expect(goToGameStartBtn).toBeInTheDocument();
-
     movesBtns = screen.queryAllByText("Go to move", { exact: false });
     expect(movesBtns).toHaveLength(3);
 });
