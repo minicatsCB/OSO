@@ -222,7 +222,7 @@ test('shows correct cells if a history record is selected', async () => {
     }
 });
 
-test('history can not be edited', async () => {
+test('if past move is selected from history, keep present score', async () => {
     render(<Game />)
 
     const board: HTMLElement = screen.getByTestId('board');
@@ -276,11 +276,47 @@ test('history can not be edited', async () => {
 
     const score2: HTMLElement = screen.getByText("Bob: 0");
     expect(score2).toBeInTheDocument();
+});
 
-    /* TODO: prepare game logic for this. Then, uncomment this code
-    act(() => userEvent.dblClick(cells[10]));
-    await waitFor(() => expect(cells[10]).toHaveTextContent(""));
-    */
+test('history should not be edited', async () => {
+    render(<Game />)
+
+    const board: HTMLElement = screen.getByTestId('board');
+    let cells: Array<HTMLElement> = within(board).getAllByRole('button');
+    const turnBtn: HTMLElement = screen.getByTestId('turn-btn');
+
+    act(() => userEvent.click(cells[0]));
+    await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
+    act(() => userEvent.click(turnBtn));
+    await screen.findByText(`It's Bob's turn`);
+
+    act(() => userEvent.dblClick(cells[1]));
+    await waitFor(() => expect(cells[1]).toHaveTextContent(S_TOKEN));
+    act(() => userEvent.click(turnBtn));
+    await screen.findByText(`It's Alice's turn`);
+
+    act(() => userEvent.click(cells[2]));
+    await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
+
+    const movesBtns: Array<HTMLElement> = screen.queryAllByText("Go to move", { exact: false });
+    expect(movesBtns).toHaveLength(3);
+
+    const currentRecord: Array<string> = ['O', 'S', 'O', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+    for (let i = 0; i < cells.length; i++) {
+        expect(cells[i]).toHaveTextContent(currentRecord[i]);
+    }
+
+    act(() => userEvent.click(movesBtns[0]));
+    expect(movesBtns).toHaveLength(3);
+
+    cells = within(board).getAllByRole('button');
+    const selectedRecord: Array<string> = ['O', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
+    for (let i = 0; i < cells.length; i++) {
+        expect(cells[i]).toHaveTextContent(selectedRecord[i]);
+    }
+
+    act(() => userEvent.dblClick(cells[7]));
+    await waitFor(() => expect(cells[7]).toHaveTextContent(""));
 });
 
 test('if turn button is clicked, status shows correct player turn', async () => {
