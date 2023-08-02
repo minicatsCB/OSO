@@ -3,6 +3,15 @@ import Game from './Game';
 import userEvent from '@testing-library/user-event';
 import { O_TOKEN, S_TOKEN } from '../core/constants';
 
+beforeEach(() => {
+    jest.useFakeTimers()
+})
+
+afterEach(() => {
+    jest.runOnlyPendingTimers()
+    jest.useRealTimers()
+})
+
 test('clicking cell once shows letter "O"', async () => {
     render(<Game />)
 
