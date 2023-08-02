@@ -51,13 +51,8 @@ test('clicking cell once calls handler correctly', async () => {
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(cells).toHaveLength(ROWS*COLS);
 
-    act(() => {
-        userEvent.click(cells[0]);
-    })
-
-    await waitFor(() => {
-        expect(handlePlay).toHaveBeenCalledWith(0, 1)
-    })
+    act(() => userEvent.click(cells[0]))
+    await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(0, 1));
 });
 
 test('clicking cell twice calls handler correctly', async () => {
@@ -71,10 +66,7 @@ test('clicking cell twice calls handler correctly', async () => {
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(cells).toHaveLength(ROWS*COLS);
 
-    act(() => {
-        userEvent.dblClick(cells[0]);
-    })
-
+    act(() => userEvent.dblClick(cells[0]))
     await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(0, 2));
 });
 
