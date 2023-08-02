@@ -12,7 +12,7 @@ test('renders 1x1 board correctly', () => {
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    expect(cells).toHaveLength(ROWS*COLS);
+    expect(cells).toHaveLength(ROWS * COLS);
 });
 
 test('renders 3x3 board correctly', () => {
@@ -24,7 +24,7 @@ test('renders 3x3 board correctly', () => {
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    expect(cells).toHaveLength(ROWS*COLS);
+    expect(cells).toHaveLength(ROWS * COLS);
 });
 
 test('renders 5x3 board correctly', () => {
@@ -36,7 +36,7 @@ test('renders 5x3 board correctly', () => {
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    expect(cells).toHaveLength(ROWS*COLS);
+    expect(cells).toHaveLength(ROWS * COLS);
 });
 
 
@@ -49,7 +49,7 @@ test('clicking cell once calls handler correctly', async () => {
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    expect(cells).toHaveLength(ROWS*COLS);
+    expect(cells).toHaveLength(ROWS * COLS);
 
     act(() => userEvent.click(cells[0]))
     await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(0, 1));
@@ -64,7 +64,7 @@ test('clicking cell twice calls handler correctly', async () => {
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    expect(cells).toHaveLength(ROWS*COLS);
+    expect(cells).toHaveLength(ROWS * COLS);
 
     act(() => userEvent.dblClick(cells[0]))
     await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(0, 2));

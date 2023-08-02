@@ -39,7 +39,7 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     const turnBtn: HTMLElement = screen.getByTestId('turn-btn');
     const markBtn: HTMLElement = screen.getByTestId('mark-btn');
     const endGameBtn: HTMLElement = screen.getByTestId('end-game-btn');
-    
+
     act(() => userEvent.click(cells[0]));
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
@@ -49,7 +49,7 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     await waitFor(() => expect(cells[1]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Alice's turn`);
-    
+
     act(() => userEvent.click(cells[2]));
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
@@ -58,7 +58,7 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     act(() => userEvent.click(cells[2]));
     await screen.findByText('Alice: 1');
     act(() => userEvent.click(markBtn));
-    
+
     act(() => userEvent.dblClick(cells[5]));
     await waitFor(() => expect(cells[5]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(turnBtn));
@@ -72,7 +72,7 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     act(() => userEvent.click(cells[10]));
     await screen.findByText('Bob: 1')
     act(() => userEvent.click(markBtn));
-    
+
     act(() => userEvent.dblClick(cells[6]));
     await waitFor(() => expect(cells[6]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(markBtn));
@@ -106,7 +106,7 @@ test('if game ends with draw, status reflect it and board gets unclickable', asy
     await waitFor(() => expect(cells[1]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Alice's turn`);
-    
+
     act(() => userEvent.click(cells[2]));
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
@@ -115,7 +115,7 @@ test('if game ends with draw, status reflect it and board gets unclickable', asy
     act(() => userEvent.click(cells[2]));
     await screen.findByText('Alice: 1');
     act(() => userEvent.click(markBtn));
-    
+
     act(() => userEvent.dblClick(cells[5]));
     await waitFor(() => expect(cells[5]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(turnBtn));
@@ -243,7 +243,7 @@ test('history can not be edited', async () => {
     await waitFor(() => expect(cells[1]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Alice's turn`);
-    
+
     act(() => userEvent.click(cells[2]));
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
@@ -252,7 +252,7 @@ test('history can not be edited', async () => {
     act(() => userEvent.click(cells[2]));
     await screen.findByText('Alice: 1');
     act(() => userEvent.click(markBtn));
-    
+
     act(() => userEvent.dblClick(cells[5]));
     await waitFor(() => expect(cells[5]).toHaveTextContent(S_TOKEN));
     act(() => userEvent.click(turnBtn));
