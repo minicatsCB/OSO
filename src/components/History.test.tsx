@@ -40,3 +40,17 @@ test('renders ok when length greater than 1', () => {
 
     expect(movesBtns[movesBtns.length - 1]).toBeDisabled();
 });
+
+test('last button should be enabled if some past move is selected', () => {
+    const handleJump = jest.fn();
+
+    render(<History length={7} onJump={handleJump} currentMove={2}/>);
+
+    const title: HTMLElement = screen.getByText("History");
+    expect(title).toBeInTheDocument();
+
+    const movesBtns: Array<HTMLElement> = screen.queryAllByText("Go to move", { exact: false });
+    expect(movesBtns).toHaveLength(7);
+
+    expect(movesBtns[movesBtns.length - 1]).toBeEnabled();
+});
