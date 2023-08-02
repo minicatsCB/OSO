@@ -8,7 +8,7 @@ const Button = styled.button`
 
 export default function TurnButton({onClick, isDisabled}: any) {
     return (
-        <Button type='button' onClick={onClick} disabled={isDisabled}>
+        <Button data-testid="turn-btn" type='button' onClick={onClick} disabled={isDisabled}>
             <FontAwesomeIcon icon={icon({name: 'arrows-turn-to-dots', style: 'solid'})} />
         </Button>
     );
