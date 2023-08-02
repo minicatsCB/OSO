@@ -15,8 +15,8 @@ test('shows correct content', () => {
         </GameContext.Provider>
     );
 
-    const clickableCells = screen.getAllByRole('button');
-    expect(clickableCells[0]).toHaveTextContent(contextValue[0]);
-    expect(clickableCells[1]).toHaveTextContent(contextValue[2]);
-    expect(clickableCells[2]).toHaveTextContent(contextValue[4]);
+    const cells = screen.getAllByRole('button');
+    expect(cells[0]).toHaveTextContent(contextValue[0]);
+    expect(cells[1]).toHaveTextContent(contextValue[2]);
+    expect(cells[2]).toHaveTextContent(contextValue[4]);
 });
