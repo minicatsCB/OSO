@@ -1,6 +1,7 @@
-import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Board from './Board';
+import { act } from 'react-dom/test-utils';
+import userEvent from '@testing-library/user-event';
 
 test('renders 1x1 board correctly', () => {
     const ROWS: number = 1;
@@ -36,18 +37,41 @@ test('renders 5x3 board correctly', () => {
 });
 
 
-test('click one board cell correctly', () => {
+test('clicking cell once calls handler correctly', async () => {
     const ROWS: number = 3;
     const COLS: number = 3;
     const handlePlay = jest.fn();
+    const cellIdx: number = 0;
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
     const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 
-    fireEvent.click(clickableCells[0]);
-  
-    expect(handlePlay).toHaveBeenCalledTimes(1);
+    act(() => {
+        userEvent.click(clickableCells[cellIdx]);
+    })
+
+    await waitFor(() => {
+        expect(handlePlay).toHaveBeenCalledWith(cellIdx, 1)
+    })
+});
+
+test('clicking cell twice calls handler correctly', async () => {
+    const ROWS: number = 3;
+    const COLS: number = 3;
+    const handlePlay = jest.fn();
+    const cellIdx: number = 0;
+
+    render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
+
+    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
+    expect(clickableCells).toHaveLength(ROWS*COLS);
+
+    act(() => {
+        userEvent.dblClick(clickableCells[cellIdx]);
+    })
+
+    await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(cellIdx, 2));
 });
 
