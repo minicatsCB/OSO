@@ -44,7 +44,6 @@ test('clicking cell once calls handler correctly', async () => {
     const ROWS: number = 3;
     const COLS: number = 3;
     const handlePlay = jest.fn();
-    const cellIdx: number = 0;
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
@@ -53,11 +52,11 @@ test('clicking cell once calls handler correctly', async () => {
     expect(cells).toHaveLength(ROWS*COLS);
 
     act(() => {
-        userEvent.click(cells[cellIdx]);
+        userEvent.click(cells[0]);
     })
 
     await waitFor(() => {
-        expect(handlePlay).toHaveBeenCalledWith(cellIdx, 1)
+        expect(handlePlay).toHaveBeenCalledWith(0, 1)
     })
 });
 
@@ -65,7 +64,6 @@ test('clicking cell twice calls handler correctly', async () => {
     const ROWS: number = 3;
     const COLS: number = 3;
     const handlePlay = jest.fn();
-    const cellIdx: number = 0;
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
@@ -74,9 +72,9 @@ test('clicking cell twice calls handler correctly', async () => {
     expect(cells).toHaveLength(ROWS*COLS);
 
     act(() => {
-        userEvent.dblClick(cells[cellIdx]);
+        userEvent.dblClick(cells[0]);
     })
 
-    await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(cellIdx, 2));
+    await waitFor(() => expect(handlePlay).toHaveBeenCalledWith(0, 2));
 });
 
