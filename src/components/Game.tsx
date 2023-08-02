@@ -46,6 +46,10 @@ export default function Game() {
     }
 
     function handlePlay(index: number, timesClicked: number): void {
+        if(currentMove < (history.length - 1)) {
+            return;
+        }
+
         if(canMark) {
             let clickedCells = generator.next(index);
             if (!clickedCells.done) {
