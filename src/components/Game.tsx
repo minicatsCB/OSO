@@ -113,7 +113,7 @@ export default function Game() {
                 <Status activePlayer={activePlayer}/>
                 <ScorePanel scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
-                <History length={historyLength} onJump={handleJump} />
+                <History length={historyLength} currentMove={currentMove} onJump={handleJump} />
             </GameContext.Provider>
         </>
     );
