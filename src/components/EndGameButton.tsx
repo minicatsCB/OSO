@@ -8,7 +8,7 @@ const Button = styled.button`
 
 export default function EndGameButton({onClick}: any) {
     return (
-        <Button type='button' onClick={onClick}>
+        <Button data-testid="end-game-btn" type='button' onClick={onClick}>
             <FontAwesomeIcon icon={icon({name: 'flag-checkered', style: 'solid'})} />
         </Button>
     );
