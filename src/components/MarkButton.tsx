@@ -8,7 +8,7 @@ const Button = styled.button`
 
 export default function MarkButton({onClick}: any) {
     return (
-        <Button type='button' onClick={onClick}>
+        <Button data-testid="mark-btn" type='button' onClick={onClick}>
             <FontAwesomeIcon icon={icon({name: 'highlighter', style: 'solid'})} />
         </Button>
     );
