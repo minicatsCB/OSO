@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, within } from '@testing-library/react';
 import Board from './Board';
 import { act } from 'react-dom/test-utils';
 import userEvent from '@testing-library/user-event';
@@ -10,7 +10,8 @@ test('renders 1x1 board correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
+    const board: HTMLElement = screen.getByTestId('board');
+    const clickableCells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 });
 
@@ -21,7 +22,8 @@ test('renders 3x3 board correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
+    const board: HTMLElement = screen.getByTestId('board');
+    const clickableCells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 });
 
@@ -32,7 +34,8 @@ test('renders 5x3 board correctly', () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
+    const board: HTMLElement = screen.getByTestId('board');
+    const clickableCells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 });
 
@@ -45,7 +48,8 @@ test('clicking cell once calls handler correctly', async () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
+    const board: HTMLElement = screen.getByTestId('board');
+    const clickableCells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 
     act(() => {
@@ -65,7 +69,8 @@ test('clicking cell twice calls handler correctly', async () => {
 
     render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
 
-    const clickableCells: Array<HTMLElement> = screen.getAllByRole('button');
+    const board: HTMLElement = screen.getByTestId('board');
+    const clickableCells: Array<HTMLElement> = within(board).getAllByRole('button');
     expect(clickableCells).toHaveLength(ROWS*COLS);
 
     act(() => {
