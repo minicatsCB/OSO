@@ -53,6 +53,24 @@ export default function Game() {
        return Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b );
     }
 
+    function getMessage(type: GameStatus): string {
+        let message: string = "";
+        switch (type) {
+            case GameStatus.TURN:
+                message = `It's ${activePlayer}'s turn`;
+                break;
+            case GameStatus.ENDED:
+                if(isADraw()) {
+                    message = "It's a draw!";
+                } else {
+                    message = `Winner is ${getWinner()}!`;
+                }
+                break;
+        }
+
+        return message;
+    }
+
     function handlePlay(index: number, timesClicked: number): void {
         if(currentMove < (history.length - 1) || status === GameStatus.ENDED) {
             return;
