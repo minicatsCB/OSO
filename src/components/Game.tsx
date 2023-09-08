@@ -49,6 +49,10 @@ export default function Game() {
         return Object.values(scores).every(s => s === Object.values(scores)[0]);
     }
 
+    function getWinner(): string {
+       return Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b );
+    }
+
     function handlePlay(index: number, timesClicked: number): void {
         if(currentMove < (history.length - 1)) {
             return;
