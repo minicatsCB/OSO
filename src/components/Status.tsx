@@ -1,5 +1,5 @@
-export default function Status({activePlayer}: {activePlayer: string}) {
+export default function Status({message}: {message: string}) {
     return(
-        <p>It's {activePlayer}'s turn</p>
+        <p>{message}</p>
     );
 }

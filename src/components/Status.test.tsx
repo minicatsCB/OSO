@@ -3,12 +3,12 @@ import Status from './Status';
 
 
 test('renders status correctly', () => {
-    const activePlayer: string = "Claire";
+    const message: string = "Claire";
 
     render(
-        <Status activePlayer={activePlayer}></Status>
+        <Status message={message}></Status>
     );
 
-    const status: HTMLElement = screen.getByText(`It's ${activePlayer}'s turn`);
+    const status: HTMLElement = screen.getByText(message);
     expect(status).toBeInTheDocument();
 });

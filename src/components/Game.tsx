@@ -8,7 +8,7 @@ import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
-import { Scores } from '../core/models';
+import { GameStatus, Scores } from '../core/models';
 import Status from './Status';
 
   let generator = wordMarker();
@@ -18,9 +18,11 @@ export default function Game() {
     const [history, setHistory] = useState<Array<Array<string>>>([]);
     const [currentMove, setCurrentMove] = useState(0);
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
+    const [status, setStatus] = useState<GameStatus>(GameStatus.TURN);
     const [scores, setScores] = useState<Scores>({[FIRST_PLAYER_NAME]: 0, [SECOND_PLAYER_NAME]: 0});
     const [canMark, setCanMark] = useState<boolean>(false);
     
+    const message: string = getMessage(status);
     const historyLength: number = history.every(record => record.length === 0) ? 0 : history.length;
     const cells: Array<string> = historyLength > 0 ? history[currentMove]: [];
     
@@ -133,7 +135,7 @@ export default function Game() {
                     <MarkButton onClick={toggleMarker}></MarkButton>
                     <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
-                <Status activePlayer={activePlayer}/>
+                <Status message={message}/>
                 <ScorePanel scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} currentMove={currentMove} onJump={handleJump} />
