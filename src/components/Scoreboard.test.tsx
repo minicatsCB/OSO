@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import Scoreboard from './ScorePanel';
+import Scoreboard from './Scoreboard';
 import { Scores } from '../core/models';
 
 test('shows info correctly', () => {

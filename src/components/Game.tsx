@@ -1,4 +1,4 @@
-import Scoreboard from './ScorePanel'
+import Scoreboard from './Scoreboard'
 import Board from './Board'
 import History from './History'
 import { useState } from 'react';
