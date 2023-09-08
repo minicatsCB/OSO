@@ -1,8 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import ScorePanel from './ScorePanel';
+import { Scores } from '../core/models';
 
 test('shows info correctly', () => {
-    const scores = {"Claire": 10, "Danny": 6};
+    const scores: Scores = [ { name: 'pepe', points: 10 }, { name: 'maría', points: 5 } ];
     render(<ScorePanel scores={scores} />);
 
     const score1: HTMLElement = screen.getByText("Claire: 10");

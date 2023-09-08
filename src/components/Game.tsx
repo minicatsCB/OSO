@@ -19,7 +19,7 @@ export default function Game() {
     const [currentMove, setCurrentMove] = useState(0);
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [status, setStatus] = useState<GameStatus>(GameStatus.TURN);
-    const [scores, setScores] = useState<Scores>({[FIRST_PLAYER_NAME]: 0, [SECOND_PLAYER_NAME]: 0});
+    const [scores, setScores] = useState<Scores>([{name: FIRST_PLAYER_NAME, points: 0}, {name: SECOND_PLAYER_NAME, points: 0}]);
     const [canMark, setCanMark] = useState<boolean>(false);
     
     const message: string = getMessage(status);
@@ -42,17 +42,20 @@ export default function Game() {
     }
 
     function updatePlayerScoreBy(playerName: string, increment: number): void {
-        let updatedScores = {...scores}
-        updatedScores[playerName] = updatedScores[playerName] + increment;
+        let updatedScores = [...scores]
+        const foundIdx = updatedScores.findIndex(s => s.name === playerName);
+        if(foundIdx !== -1) {
+            updatedScores[foundIdx].points = updatedScores[foundIdx].points + increment;
+        }
         setScores(updatedScores)
     }
 
     function isADraw(): boolean {
-        return Object.values(scores).every(s => s === Object.values(scores)[0]);
+        return scores.every(s => s.points === scores[0].points);
     }
 
     function getWinner(): string {
-       return Object.keys(scores).reduce((a, b) => scores[a] >= scores[b] ? a : b );
+       return scores.reduce((a, b) => a.points >= b.points ? a : b ).name;
     }
 
     function getMessage(type: GameStatus): string {
