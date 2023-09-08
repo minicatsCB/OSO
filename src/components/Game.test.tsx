@@ -82,9 +82,11 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     await screen.findByText('Bob: 2')
     act(() => userEvent.click(markBtn));
 
-    // TODO: Bob clicks end game button
-    // TODO: status should say "Winner: Bob"
-    // TODO: board should be unclickable
+    act(() => userEvent.click(endGameBtn));
+    await screen.findByText("Winner is Bob!");
+
+    act(() => userEvent.dblClick(cells[3]));
+    await waitFor(() => expect(cells[3]).toHaveTextContent(""));
 });
 
 
@@ -130,20 +132,27 @@ test('if game ends with draw, status reflect it and board gets unclickable', asy
     await screen.findByText('Bob: 1')
     act(() => userEvent.click(markBtn));
 
-    // TODO: Bob clicks end game button
-    // TODO: status should say "It's a draw!"
-    // TODO: board should be unclickable
+    act(() => userEvent.click(endGameBtn));
+    await screen.findByText("It's a draw!");
+
+    act(() => userEvent.dblClick(cells[3]));
+    await waitFor(() => expect(cells[3]).toHaveTextContent(""));
 });
 
 test('if no body makes a move and game ends, status should reflect a draw and board gets unclickable', async () => {
     render(<Game />)
 
     const board: HTMLElement = screen.getByTestId('board');
+    const cells: Array<HTMLElement> = within(board).getAllByRole('button');
     const endGameBtn: HTMLElement = screen.getByTestId('end-game-btn');
 
-    // TODO: Alice clicks end game button
-    // TODO: status should say "It's a draw!"
-    // TODO: board should be unclickable
+    await screen.findByText("It's Alice's turn");
+
+    act(() => userEvent.click(endGameBtn));
+    await screen.findByText("It's a draw!");
+
+    act(() => userEvent.dblClick(cells[1]));
+    await waitFor(() => expect(cells[1]).toHaveTextContent(""));
 });
 
 test('renders history according to game state', async () => {
