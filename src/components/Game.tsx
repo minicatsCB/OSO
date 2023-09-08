@@ -45,6 +45,10 @@ export default function Game() {
         setScores(updatedScores)
     }
 
+    function isADraw(): boolean {
+        return Object.values(scores).every(s => s === Object.values(scores)[0]);
+    }
+
     function handlePlay(index: number, timesClicked: number): void {
         if(currentMove < (history.length - 1)) {
             return;
