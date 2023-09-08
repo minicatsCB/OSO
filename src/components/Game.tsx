@@ -96,10 +96,7 @@ export default function Game() {
     }
 
     function endGame(): void {
-        // prevent board from being clicked
-        // calculate winner
-        // show winner
-        throw Error("method not implemented");
+        setStatus(GameStatus.ENDED);
     }
 
     function resetMarker(): void {
