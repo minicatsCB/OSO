@@ -18,12 +18,12 @@ export default function Board({rows, cols, onPlay} : any) {
     const grid: Array<Array<string>> = generateGrid(rows, cols);
 
     return (
-        <StyledGrid $rowsNum={rows} $colsNum={cols} className="container">
+        <StyledGrid data-testid="board" $rowsNum={rows} $colsNum={cols} className="container">
             {grid.map((row: Array<string>, rowIdx: number) =>
                 row.map((col: string, colIdx: number) => {
                     const cellIdx: number = (rowIdx * cols) + colIdx;
                     return (
-                        <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={() => onPlay(cellIdx)}></Cell>
+                        <Cell key={`${rowIdx}-${colIdx}`} index={cellIdx} onClick={onPlay}></Cell>
                     )
                 })
             )}
