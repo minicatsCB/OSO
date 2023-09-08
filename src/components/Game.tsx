@@ -54,7 +54,7 @@ export default function Game() {
     }
 
     function handlePlay(index: number, timesClicked: number): void {
-        if(currentMove < (history.length - 1)) {
+        if(currentMove < (history.length - 1) || status === GameStatus.ENDED) {
             return;
         }
 
