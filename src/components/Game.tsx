@@ -1,4 +1,4 @@
-import ScorePanel from './ScorePanel'
+import Scoreboard from './ScorePanel'
 import Board from './Board'
 import History from './History'
 import { useState } from 'react';
@@ -139,7 +139,7 @@ export default function Game() {
                     <EndGameButton onClick={endGame}></EndGameButton>
                 </div>
                 <Status message={message}/>
-                <ScorePanel scores={scores} />
+                <Scoreboard scores={scores} />
                 <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
                 <History length={historyLength} currentMove={currentMove} onJump={handleJump} />
             </GameContext.Provider>

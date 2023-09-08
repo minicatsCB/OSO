@@ -1,6 +1,6 @@
 import { Player, Scores } from "../core/models";
 
-export default function ScorePanel({scores}: {scores: Scores}) {
+export default function Scoreboard({scores}: {scores: Scores}) {
     return (
         <>
             <ul>
