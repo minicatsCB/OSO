@@ -3,7 +3,7 @@ import Scoreboard from './Scoreboard';
 import { Scores } from '../core/models';
 
 test('shows info correctly', () => {
-    const scores: Scores = [ { name: 'pepe', points: 10 }, { name: 'maría', points: 5 } ];
+    const scores: Scores = [ { name: 'Claire', points: 10 }, { name: 'Danny', points: 6 } ];
     render(<Scoreboard scores={scores} />);
 
     const score1: HTMLElement = screen.getByText("Claire: 10");
