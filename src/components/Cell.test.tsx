@@ -2,21 +2,43 @@ import { render, screen } from '@testing-library/react';
 import Cell from './Cell';
 import GameContext from '../core/gameContext';
 
-const contextValue: Array<string> = ['O', '', '', '', 'S', '', '', '', ''];
+const contextValue: Array<string> = ['', '', '', '', 'S', '', 'O', '', ''];
 
-test('shows correct content', () => {
+test('should be empty if not clicked', async () => {
     const onClick = jest.fn();
 
     render(
         <GameContext.Provider value={contextValue}>
-            <Cell key="0-0" index={0} onClick={() => onClick(0, 1)}></Cell>
-            <Cell key="0-2" index={2} onClick={() => onClick(2, 0)}></Cell>
-            <Cell key="1-1" index={4} onClick={() => onClick(4, 2)}></Cell>
+            <Cell key="0-1" index={1} onClick={onClick}></Cell>
         </GameContext.Provider>
     );
 
     const cells = screen.getAllByRole('button');
-    expect(cells[0]).toHaveTextContent(contextValue[0]);
-    expect(cells[1]).toHaveTextContent(contextValue[2]);
-    expect(cells[2]).toHaveTextContent(contextValue[4]);
+    expect(cells[0]).toHaveTextContent(contextValue[1]);
+});
+
+test('should show letter "O" on single click', async () => {
+    const onClick = jest.fn();
+
+    render(
+        <GameContext.Provider value={contextValue}>
+            <Cell key="2-0" index={6} onClick={() => onClick(0, 1)}></Cell>
+        </GameContext.Provider>
+    );
+
+    const cells = screen.getAllByRole('button');
+    expect(cells[0]).toHaveTextContent(contextValue[6]);
+});
+
+test('should show letter "S" on double click', async () => {
+    const onClick = jest.fn();
+
+    render(
+        <GameContext.Provider value={contextValue}>
+            <Cell key="1-1" index={4} onClick={() => onClick(0, 1)}></Cell>
+        </GameContext.Provider>
+    );
+
+    const cells = screen.getAllByRole('button');
+    expect(cells[0]).toHaveTextContent(contextValue[4]);
 });

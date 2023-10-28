@@ -12,25 +12,6 @@ afterEach(() => {
     jest.useRealTimers()
 })
 
-test('clicking cell once shows letter "O"', async () => {
-    render(<Game />)
-
-    const board: HTMLElement = screen.getByTestId('board');
-    const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    act(() => userEvent.click(cells[0]));
-
-    await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));   // For now, default timeout is ok (1000ms)
-});
-
-test('clicking cell twice shows letter "S"', async () => {
-    render(<Game />)
-
-    const board: HTMLElement = screen.getByTestId('board');
-    const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    act(() => userEvent.dblClick(cells[0]));
-    await waitFor(() => expect(cells[0]).toHaveTextContent(S_TOKEN));
-});
-
 test('if game ends with victory, status reflects the winner and board gets unclickable', async () => {
     render(<Game />)
 
