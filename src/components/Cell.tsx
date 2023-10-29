@@ -8,7 +8,7 @@ const Button = styled.button`
     font-size: 4rem;
 `;
 
-export default function Cell({className, index, onClick}: any) {
+export default function Cell({index, onClick}: any) {
     const value: string[] = useContext(GameContext);
     const timer = useRef<number | undefined>(undefined);
 
@@ -25,6 +25,6 @@ export default function Cell({className, index, onClick}: any) {
     const text: string = value.at(index) || '';
 
     return (
-        <Button type="button" className={className} onClick={onClickHandler}>{text}</Button>
+        <Button type="button" onClick={onClickHandler}>{text}</Button>
     );
 }
