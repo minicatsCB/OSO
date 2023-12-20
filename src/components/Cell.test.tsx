@@ -1,44 +1,52 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import Cell from './Cell';
-import GameContext from '../core/gameContext';
+import { O_TOKEN, SECOND_CLICK_WAIT_TIME, S_TOKEN } from '../core/constants';
+import userEvent from '@testing-library/user-event';
 
-const contextValue: Array<string> = ['', '', '', '', 'S', '', 'O', '', ''];
+beforeEach(() => {
+  jest.useFakeTimers()
+})
 
-test('should be empty if not clicked', async () => {
-    const onClick = jest.fn();
+afterEach(() => {
+  jest.runOnlyPendingTimers()
+  jest.useRealTimers()
+})
 
-    render(
-        <GameContext.Provider value={contextValue}>
-            <Cell key="0-1" index={1} onClick={onClick}></Cell>
-        </GameContext.Provider>
-    );
+test('should render empty correctly', async () => {
+  const onClick = jest.fn();
 
-    const cells = screen.getAllByRole('button');
-    expect(cells[0]).toHaveTextContent(contextValue[1]);
+  render(<Cell key="0-1" index={1} value={''} onClick={onClick}></Cell>);
+
+  const cells = screen.getAllByRole('button');
+  expect(cells[0]).toBeEmptyDOMElement();
 });
 
-test('should show letter "O" on single click', async () => {
-    const onClick = jest.fn();
+test('should render value correctly', async () => {
+  const onClick = jest.fn();
 
-    render(
-        <GameContext.Provider value={contextValue}>
-            <Cell key="2-0" index={6} onClick={() => onClick(0, 1)}></Cell>
-        </GameContext.Provider>
-    );
+  render(<Cell key="2-0" index={6} value={O_TOKEN} onClick={() => onClick(0, 1)}></Cell>);
 
-    const cells = screen.getAllByRole('button');
-    expect(cells[0]).toHaveTextContent(contextValue[6]);
+  const cells = screen.getAllByRole('button');
+  expect(cells[0]).toHaveTextContent(O_TOKEN);
 });
 
-test('should show letter "S" on double click', async () => {
-    const onClick = jest.fn();
+test('should call hadler correctly on single click', async () => {
+  const onClick = jest.fn();
 
-    render(
-        <GameContext.Provider value={contextValue}>
-            <Cell key="1-1" index={4} onClick={() => onClick(0, 1)}></Cell>
-        </GameContext.Provider>
-    );
+  render(<Cell key="1-2" index={5} value={''} onClick={onClick}></Cell>);
 
-    const cells = screen.getAllByRole('button');
-    expect(cells[0]).toHaveTextContent(contextValue[4]);
+  const cells = screen.getAllByRole('button');
+  userEvent.click(cells[0]);
+  jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
+  expect(onClick).toHaveBeenCalledWith(5, 1);
+});
+
+test('should call hadler correctly on double click', async () => {
+  const onClick = jest.fn();
+
+  render(<Cell key="1-2" index={5} value={''} onClick={onClick}></Cell>);
+
+  const cells = screen.getAllByRole('button');
+  userEvent.dblClick(cells[0]);
+  expect(onClick).toHaveBeenCalledWith(5, 2);
 });
