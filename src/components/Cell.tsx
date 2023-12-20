@@ -8,8 +8,7 @@ const Button = styled.button`
     font-size: 4rem;
 `;
 
-export default function Cell({index, onClick}: any) {
-    const value: string[] = useContext(GameContext);
+export default function Cell({ index, value, onClick }: any) {
     const timer = useRef<number | undefined>(undefined);
 
     function onClickHandler(event: React.MouseEvent<HTMLButtonElement>) {
@@ -22,9 +21,7 @@ export default function Cell({index, onClick}: any) {
         }
     }
 
-    const text: string = value.at(index) || '';
-
     return (
-        <Button type="button" onClick={onClickHandler}>{text}</Button>
+        <Button type="button" onClick={onClickHandler}>{value}</Button>
     );
 }
