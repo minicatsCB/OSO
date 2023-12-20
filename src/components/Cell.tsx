@@ -21,7 +21,10 @@ export default function Cell({ index, value, onClick }: any) {
     });
 
     function onClickHandler(event: React.MouseEvent<HTMLButtonElement>) {
-        if (value) return;
+        if (value) {
+            onClick(index, 1);
+            return;
+        };
 
         event.preventDefault();
         event.stopPropagation();
