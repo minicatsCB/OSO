@@ -5,7 +5,7 @@ export default function Scoreboard({scores}: {scores: Scores}) {
         <>
             <ul>
                 {scores.map((s: Player) => (
-                    <li key={s.name}>{s.name}: {s.points}</li>
+                    <li key={s.name}><span>{s.name}: {s.points}</span></li>
                 ))}
             </ul>
         </>
