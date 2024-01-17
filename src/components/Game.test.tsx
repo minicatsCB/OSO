@@ -36,11 +36,15 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
+    expect(turnBtn).not.toBeEnabled();
+    expect(markBtn).toBeEnabled();
     act(() => userEvent.click(cells[0]));
     act(() => userEvent.click(cells[1]));
     act(() => userEvent.click(cells[2]));
     await screen.findByText('Alice: 1');
     act(() => userEvent.click(markBtn));
+    expect(turnBtn).toBeEnabled();
+    expect(markBtn).toBeEnabled();
 
     act(() => userEvent.dblClick(cells[5]));
     await waitFor(() => expect(cells[5]).toHaveTextContent(S_TOKEN));
