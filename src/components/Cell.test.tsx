@@ -1,6 +1,6 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import Cell from './Cell';
-import { O_TOKEN, SECOND_CLICK_WAIT_TIME, S_TOKEN } from '../core/constants';
+import { O_TOKEN, SECOND_CLICK_WAIT_TIME } from '../core/constants';
 import userEvent from '@testing-library/user-event';
 
 beforeEach(() => {
