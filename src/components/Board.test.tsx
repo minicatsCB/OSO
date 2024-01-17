@@ -6,7 +6,7 @@ test('renders 1x1 board correctly', () => {
     const COLS: number = 1;
     const handlePlay = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
+    render(<Board rows={ROWS} cols={COLS} values={[]} onPlay={handlePlay} />);
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
@@ -18,7 +18,7 @@ test('renders 3x3 board correctly', () => {
     const COLS: number = 3;
     const handlePlay = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
+    render(<Board rows={ROWS} cols={COLS} values={[]} onPlay={handlePlay} />);
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
@@ -30,7 +30,7 @@ test('renders 5x3 board correctly', () => {
     const COLS: number = 3;
     const handlePlay = jest.fn();
 
-    render(<Board rows={ROWS} cols={COLS} onPlay={handlePlay} />);
+    render(<Board rows={ROWS} cols={COLS} values={[]} onPlay={handlePlay} />);
 
     const board: HTMLElement = screen.getByTestId('board');
     const cells: Array<HTMLElement> = within(board).getAllByRole('button');
