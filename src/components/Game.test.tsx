@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor, within } from '@testing-library/react';
 import Game from './Game';
 import userEvent from '@testing-library/user-event';
-import { O_TOKEN, S_TOKEN } from '../core/constants';
+import { O_TOKEN, SECOND_CLICK_WAIT_TIME, S_TOKEN } from '../core/constants';
 
 beforeEach(() => {
     jest.useFakeTimers()
@@ -11,25 +11,6 @@ afterEach(() => {
     jest.runOnlyPendingTimers()
     jest.useRealTimers()
 })
-
-test('clicking cell once shows letter "O"', async () => {
-    render(<Game />)
-
-    const board: HTMLElement = screen.getByTestId('board');
-    const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    act(() => userEvent.click(cells[0]));
-
-    await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));   // For now, default timeout is ok (1000ms)
-});
-
-test('clicking cell twice shows letter "S"', async () => {
-    render(<Game />)
-
-    const board: HTMLElement = screen.getByTestId('board');
-    const cells: Array<HTMLElement> = within(board).getAllByRole('button');
-    act(() => userEvent.dblClick(cells[0]));
-    await waitFor(() => expect(cells[0]).toHaveTextContent(S_TOKEN));
-});
 
 test('if game ends with victory, status reflects the winner and board gets unclickable', async () => {
     render(<Game />)
@@ -41,6 +22,7 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     const endGameBtn: HTMLElement = screen.getByTestId('end-game-btn');
 
     act(() => userEvent.click(cells[0]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -51,13 +33,18 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     await screen.findByText(`It's Alice's turn`);
 
     act(() => userEvent.click(cells[2]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
+    expect(turnBtn).not.toBeEnabled();
+    expect(markBtn).toBeEnabled();
     act(() => userEvent.click(cells[0]));
     act(() => userEvent.click(cells[1]));
     act(() => userEvent.click(cells[2]));
     await screen.findByText('Alice: 1');
     act(() => userEvent.click(markBtn));
+    expect(turnBtn).toBeEnabled();
+    expect(markBtn).toBeEnabled();
 
     act(() => userEvent.dblClick(cells[5]));
     await waitFor(() => expect(cells[5]).toHaveTextContent(S_TOKEN));
@@ -65,6 +52,7 @@ test('if game ends with victory, status reflects the winner and board gets uncli
     await screen.findByText("It's Bob's turn")
 
     act(() => userEvent.click(cells[10]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[10]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
     act(() => userEvent.click(cells[0]));
@@ -100,6 +88,7 @@ test('if game ends with draw, status reflect it and board gets unclickable', asy
     const endGameBtn: HTMLElement = screen.getByTestId('end-game-btn');
 
     act(() => userEvent.click(cells[0]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -110,6 +99,7 @@ test('if game ends with draw, status reflect it and board gets unclickable', asy
     await screen.findByText(`It's Alice's turn`);
 
     act(() => userEvent.click(cells[2]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
     act(() => userEvent.click(cells[0]));
@@ -124,6 +114,7 @@ test('if game ends with draw, status reflect it and board gets unclickable', asy
     await screen.findByText("It's Bob's turn")
 
     act(() => userEvent.click(cells[10]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[10]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
     act(() => userEvent.click(cells[0]));
@@ -169,6 +160,7 @@ test('renders history according to game state', async () => {
     const turnBtn: HTMLElement = screen.getByTestId('turn-btn');
 
     act(() => userEvent.click(cells[0]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -179,6 +171,7 @@ test('renders history according to game state', async () => {
     await screen.findByText(`It's Alice's turn`);
 
     act(() => userEvent.click(cells[5]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[5]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -195,6 +188,7 @@ test('shows correct cells if a history record is selected', async () => {
     const turnBtn: HTMLElement = screen.getByTestId('turn-btn');
 
     act(() => userEvent.click(cells[0]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -205,11 +199,13 @@ test('shows correct cells if a history record is selected', async () => {
     await screen.findByText(`It's Alice's turn`);
 
     act(() => userEvent.click(cells[5]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[5]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
 
     act(() => userEvent.click(cells[3]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[3]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Alice's turn`);
@@ -241,6 +237,7 @@ test('if past move is selected from history, keep present score', async () => {
 
     // Unnecessary long game
     act(() => userEvent.click(cells[0]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -251,6 +248,7 @@ test('if past move is selected from history, keep present score', async () => {
     await screen.findByText(`It's Alice's turn`);
 
     act(() => userEvent.click(cells[2]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(markBtn));
     act(() => userEvent.click(cells[0]));
@@ -295,6 +293,7 @@ test('history should not be edited', async () => {
     const turnBtn: HTMLElement = screen.getByTestId('turn-btn');
 
     act(() => userEvent.click(cells[0]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[0]).toHaveTextContent(O_TOKEN));
     act(() => userEvent.click(turnBtn));
     await screen.findByText(`It's Bob's turn`);
@@ -305,6 +304,7 @@ test('history should not be edited', async () => {
     await screen.findByText(`It's Alice's turn`);
 
     act(() => userEvent.click(cells[2]));
+    jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
 
     const movesBtns: Array<HTMLElement> = screen.queryAllByText("Go to move", { exact: false });

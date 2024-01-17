@@ -4,15 +4,14 @@ import History from './History'
 import { useState } from 'react';
 import { markIsValid, wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
-import GameContext from '../core/gameContext';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
 import { GameStatus, Scores } from '../core/models';
 import Status from './Status';
 
-  let generator = wordMarker();
-  generator.next();
+let generator = wordMarker();
+generator.next();
 
 export default function Game() {
     const [history, setHistory] = useState<Array<Array<string>>>([]);
@@ -129,20 +128,16 @@ export default function Game() {
 
     return (
         <>
-            <GameContext.Provider
-                value={cells}
-            >
-                <h1>OSO game</h1>
-                <div className="commands">
-                    <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
-                    <MarkButton onClick={toggleMarker}></MarkButton>
-                    <EndGameButton onClick={endGame}></EndGameButton>
-                </div>
-                <Status message={message}/>
-                <Scoreboard scores={scores} />
-                <Board rows={ROWS} cols={COLS} onPlay={handlePlay} />
-                <History length={historyLength} currentMove={currentMove} onJump={handleJump} />
-            </GameContext.Provider>
+            <h1>OSO game</h1>
+            <div className="commands">
+                <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
+                <MarkButton onClick={toggleMarker}></MarkButton>
+                <EndGameButton onClick={endGame}></EndGameButton>
+            </div>
+            <Status message={message}/>
+            <Scoreboard scores={scores} />
+            <Board rows={ROWS} cols={COLS} values={cells} onPlay={handlePlay} />
+            <History length={historyLength} currentMove={currentMove} onJump={handleJump} />
         </>
     );
 }

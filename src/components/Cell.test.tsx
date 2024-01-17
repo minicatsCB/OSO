@@ -1,22 +1,52 @@
 import { render, screen } from '@testing-library/react';
 import Cell from './Cell';
-import GameContext from '../core/gameContext';
+import { O_TOKEN, SECOND_CLICK_WAIT_TIME } from '../core/constants';
+import userEvent from '@testing-library/user-event';
 
-const contextValue: Array<string> = ['O', '', '', '', 'S', '', '', '', ''];
+beforeEach(() => {
+  jest.useFakeTimers()
+})
 
-test('shows correct content', () => {
-    const onClick = jest.fn();
+afterEach(() => {
+  jest.runOnlyPendingTimers()
+  jest.useRealTimers()
+})
 
-    render(
-        <GameContext.Provider value={contextValue}>
-            <Cell key="0-0" index={0} onClick={() => onClick(0, 1)}></Cell>
-            <Cell key="0-2" index={2} onClick={() => onClick(2, 0)}></Cell>
-            <Cell key="1-1" index={4} onClick={() => onClick(4, 2)}></Cell>
-        </GameContext.Provider>
-    );
+test('should render empty correctly', async () => {
+  const onClick = jest.fn();
 
-    const cells = screen.getAllByRole('button');
-    expect(cells[0]).toHaveTextContent(contextValue[0]);
-    expect(cells[1]).toHaveTextContent(contextValue[2]);
-    expect(cells[2]).toHaveTextContent(contextValue[4]);
+  render(<Cell key="0-1" index={1} value={''} onClick={onClick}></Cell>);
+
+  const cells = screen.getAllByRole('button');
+  expect(cells[0]).toBeEmptyDOMElement();
+});
+
+test('should render value correctly', async () => {
+  const onClick = jest.fn();
+
+  render(<Cell key="2-0" index={6} value={O_TOKEN} onClick={() => onClick(0, 1)}></Cell>);
+
+  const cells = screen.getAllByRole('button');
+  expect(cells[0]).toHaveTextContent(O_TOKEN);
+});
+
+test('should call hadler correctly on single click', async () => {
+  const onClick = jest.fn();
+
+  render(<Cell key="1-2" index={5} value={''} onClick={onClick}></Cell>);
+
+  const cells = screen.getAllByRole('button');
+  userEvent.click(cells[0]);
+  jest.advanceTimersByTime(SECOND_CLICK_WAIT_TIME);
+  expect(onClick).toHaveBeenCalledWith(5, 1);
+});
+
+test('should call hadler correctly on double click', async () => {
+  const onClick = jest.fn();
+
+  render(<Cell key="1-2" index={5} value={''} onClick={onClick}></Cell>);
+
+  const cells = screen.getAllByRole('button');
+  userEvent.dblClick(cells[0]);
+  expect(onClick).toHaveBeenCalledWith(5, 2);
 });

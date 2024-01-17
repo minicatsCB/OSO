@@ -3,7 +3,7 @@ import Status from './Status';
 
 
 test('renders status correctly', () => {
-    const message: string = "Claire";
+    const message: string = "It's Ellie's turn";
 
     render(
         <Status message={message}></Status>
