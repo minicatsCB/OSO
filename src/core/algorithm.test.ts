@@ -1,26 +1,4 @@
-import calculateWinner from "./algorithm";
-import { markIsValid } from "./algorithm";
-
-// Deprecated: this function stills works under tic-tac-toe rules
-// TODO: modify it to follo OSO rules
-test('X wins', () => {
-    const cells: Array<string> = ['X', 'O', 'X', '', 'X', '', 'X', 'O', 'O'];
-    expect(calculateWinner(cells)).toBe('X');
-});
-
-// Deprecated: this function stills works under tic-tac-toe rules
-// TODO: modify it to follo OSO rules
-test('O wins', () => {
-    const cells: Array<string> = ['X', 'O', 'X', '', 'X', '', 'O', 'O', 'O'];
-    expect(calculateWinner(cells)).toBe('O');
-});
-
-// Deprecated: this function stills works under tic-tac-toe rules
-// TODO: modify it to follo OSO rules
-test('Draw', () => {
-    const cells: Array<string> = ['X', 'O', 'X', '', 'X', '', 'O', 'X', 'O'];
-    expect(calculateWinner(cells)).toBe('');
-});
+import { markIsValid, wordMarker } from "./algorithm";
 
 test('marked word is valid', () => {
     const mark: Array<string> = ['O', 'S', 'O'];
@@ -40,4 +18,13 @@ test('marked word is invalid', () => {
     for (const mark of invalidMarks) {
         expect(markIsValid(mark)).toBe(false);   
     }
+});
+
+test('marker generator returns 3 indexes', () => {
+    const generator = wordMarker();
+    generator.next();
+    generator.next(4);
+    generator.next(0);
+    const { value } = generator.next(6);
+    expect((value as Array<number>).length).toBe(3);
 });
