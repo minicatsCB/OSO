@@ -7,7 +7,7 @@ import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } f
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
-import { GameStatus, Scores } from '../core/models';
+import { GameStatus, Player, Scores } from '../core/models';
 import Status from './Status';
 
 let generator = wordMarker();
@@ -54,7 +54,7 @@ export default function Game() {
     }
 
     function getWinner(): string {
-       return scores.reduce((a, b) => a.points >= b.points ? a : b ).name;
+       return scores.reduce((a: Player, b: Player) => a.points >= b.points ? a : b ).name;
     }
 
     function getMessage(type: GameStatus): string {
