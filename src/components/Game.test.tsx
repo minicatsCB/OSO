@@ -33,7 +33,7 @@ test('same OSO word can not be marked twice', async () => {
     await waitFor(() => expect(cells[2]).toHaveTextContent(O_TOKEN));
     await clickCells([markBtn]);
     await clickCells([cells[0], cells[1], cells[2]]);
-    await checkScore('Alice', 1); // TODO: use expect()?
+    await checkScore('Alice', 1);
     await clickCells([cells[0], cells[1], cells[2]]);
     await checkScore('Alice', 1);
     await clickCells([cells[2], cells[1], cells[0]]);
