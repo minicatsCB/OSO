@@ -87,14 +87,14 @@ export default function Game() {
         }
 
         if(canMark) {
-            let clickedCells = generator.next(index);
-            if (!clickedCells.done) {
+            let markIndices = generator.next(index);
+            if (!markIndices.done) {
                 // We expect another click. Do nothing.
-            } else if (clickedCells.value) {
-                const cellsContent = clickedCells.value.map(cellIdx => cells[cellIdx]);
-                const isValid = !markExists(clickedCells.value) && markIsValid(cellsContent);
+            } else if (markIndices.value) {
+                const markTokens = markIndices.value.map(cellIdx => cells[cellIdx]);
+                const isValid = !markExists(markIndices.value) && markIsValid(markTokens);
                 if (isValid) {
-                    updateMarks(clickedCells.value);
+                    updateMarks(markIndices.value);
                     updatePlayerScoreBy(activePlayer, 1);
                 }
                 resetMarker();
