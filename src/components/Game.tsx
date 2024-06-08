@@ -1,19 +1,21 @@
 import Scoreboard from './Scoreboard'
 import Board from './Board'
 import { useState } from 'react';
-import { markIsValid, wordMarker } from '../core/algorithm';
+import { compareNumbers, markIsValid, wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
-import { Cell, GameStatus, Player, Scores } from '../core/models';
+import { Cell, Mark, GameStatus, Player, Scores } from '../core/models';
 import Status from './Status';
+import { ArraySet } from '../core/ArraySet';
 
 let generator = wordMarker();
 generator.next();
 
 export default function Game() {
     const [cells, setCells] = useState<Array<Cell>>(Array(ROWS * COLS).fill(null));
+    const [marks, setMarks] = useState<ArraySet<Mark>>(new ArraySet<Mark>());
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [status, setStatus] = useState<GameStatus>(GameStatus.TURN);
     const [scores, setScores] = useState<Scores>([{name: FIRST_PLAYER_NAME, points: 0}, {name: SECOND_PLAYER_NAME, points: 0}]);
@@ -29,6 +31,19 @@ export default function Game() {
         const newCells = [...cells];
         newCells[index] = token;
         setCells(newCells);
+    }
+
+    function updateMarks(newMark: Mark): void {
+        const newMarks: ArraySet<Mark> = new ArraySet();
+        for (const mark of marks.values()) {
+            newMarks.add(mark.sort(compareNumbers));
+        }
+        newMarks.add(newMark.sort(compareNumbers));
+        setMarks(newMarks);
+    }
+
+    function markExists(mark: Mark): boolean {
+        return marks.has(mark.sort(compareNumbers));
     }
 
     function updatePlayerScoreBy(playerName: string, increment: number): void {
@@ -77,8 +92,9 @@ export default function Game() {
                 // We expect another click. Do nothing.
             } else if (clickedCells.value) {
                 const cellsContent = clickedCells.value.map(cellIdx => cells[cellIdx]);
-                const isValid = markIsValid(cellsContent);
+                const isValid = !markExists(clickedCells.value) && markIsValid(cellsContent);
                 if (isValid) {
+                    updateMarks(clickedCells.value);
                     updatePlayerScoreBy(activePlayer, 1);
                 }
                 resetMarker();
