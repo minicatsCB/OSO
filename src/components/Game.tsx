@@ -139,7 +139,7 @@ export default function Game() {
             </div>
             <Status message={message}/>
             <Scoreboard scores={scores} />
-            <Board rows={ROWS} cols={COLS} values={cells} onPlay={handlePlay} />
+            <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
         </>
     );
 }

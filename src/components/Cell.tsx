@@ -7,7 +7,7 @@ const Button = styled.button`
     font-size: 4rem;
 `;
 
-export default function Cell({ index, value, onClick }: any) {
+export default function Cell({ index, value, onClick, isDisabled }: any) {
     const timer = useRef<number | undefined>(undefined);
 
     // Runs on mount and on every re-render
@@ -44,6 +44,6 @@ export default function Cell({ index, value, onClick }: any) {
     }
 
     return (
-        <Button type="button" onClick={onClickHandler}>{value}</Button>
+        <Button type="button" onClick={onClickHandler} disabled={isDisabled}>{value}</Button>
     );
 }
