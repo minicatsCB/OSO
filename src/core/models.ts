@@ -11,3 +11,4 @@ export enum GameStatus {
 };
 
 export type Cell = string;
+export type Mark = Array<number>;

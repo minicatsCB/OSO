@@ -16,3 +16,7 @@ export function* wordMarker(): Generator<number, Array<number>, number> {
 
   return clickedCells;
 }
+
+export function compareNumbers(a: number, b: number): number {
+  return a - b;
+}
