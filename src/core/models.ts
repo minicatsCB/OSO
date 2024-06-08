@@ -9,3 +9,5 @@ export enum GameStatus {
     TURN,
     ENDED
 };
+
+export type Cell = string;
