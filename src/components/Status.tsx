@@ -1,5 +1,7 @@
+const style = { marginTop: '32px' }
+
 export default function Status({message}: {message: string}) {
     return(
-        <p>{message}</p>
+        <p style={style}>{message}</p>
     );
 }

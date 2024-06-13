@@ -9,6 +9,7 @@ import EndGameButton from './EndGameButton';
 import { Cell, Mark, GameStatus, Player, Scores } from '../core/models';
 import Status from './Status';
 import { ArraySet } from '../core/ArraySet';
+import './Game.css';
 
 let generator = wordMarker();
 generator.next();
@@ -131,15 +132,15 @@ export default function Game() {
 
     return (
         <>
-            <h1>OSO game</h1>
+            <h1 className="title">OSO game</h1>
+            <Status message={message}/>
+            <Scoreboard scores={scores} />
+            <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
             <div className="commands">
                 <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
                 <MarkButton onClick={toggleMarker}></MarkButton>
                 <EndGameButton onClick={endGame}></EndGameButton>
             </div>
-            <Status message={message}/>
-            <Scoreboard scores={scores} />
-            <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
         </>
     );
 }

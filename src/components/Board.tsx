@@ -4,6 +4,7 @@ import Cell from './Cell';
 const StyledGrid = styled.div<{ $rowsNum: number; $colsNum: number; }>`
   width: 300px;
   height: 300px;
+  margin-bottom: 32px;
   display: grid;
   grid-template-rows: repeat(${props => props.$rowsNum}, 1fr);
   grid-template-columns: repeat(${props => props.$colsNum}, 1fr);
