@@ -12,3 +12,7 @@ export enum GameStatus {
 
 export type Cell = string;
 export type Mark = Array<number>;
+export interface Coordinate {
+    x: number;
+    y: number;
+};

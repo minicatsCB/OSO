@@ -6,7 +6,7 @@ import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } f
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
-import { Cell, Mark, GameStatus, Player, Scores } from '../core/models';
+import { Cell, Mark, GameStatus, Player, Scores, Coordinate } from '../core/models';
 import Status from './Status';
 import { ArraySet } from '../core/ArraySet';
 import './Game.css';
@@ -29,14 +29,14 @@ export default function Game() {
         drawMarks();
     }, [marks]);
 
-    function setupCanvas() {
+    function setupCanvas(): void {
         const canvas = canvasRef.current;
         const rect = canvas.getBoundingClientRect();
         canvas.width = rect.width;
         canvas.height = rect.height;
     }
 
-    function clearCanvas() {
+    function clearCanvas(): void {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         if (ctx) {
@@ -44,31 +44,31 @@ export default function Game() {
         }
     }
 
-    function drawMarks() {
+    function drawMarks(): void {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
         marks.values().forEach((mark) => {
-            const coordinates = mark.map(cellIdx => getCoordinates(cellIdx, canvas));
+            const coordinates: Array<Coordinate> = mark.map((cellIdx: number) => getCoordinates(cellIdx, canvas));
             if (coordinates.length > 1) {
                 ctx.beginPath();
-                const {x: startX, y: startY} = coordinates[0];
+                const {x: startX, y: startY}: Coordinate = coordinates[0];
                 ctx.moveTo(startX, startY);
-                coordinates.slice(1).forEach(({x, y}) => ctx.lineTo(x, y));
+                coordinates.slice(1).forEach(({x, y}: Coordinate) => ctx.lineTo(x, y));
                 ctx.stroke();
             }
         });
     }
 
-    function getCoordinates(cellIdx: number, canvas: HTMLCanvasElement): {x: number, y: number} {
+    function getCoordinates(cellIdx: number, canvas: HTMLCanvasElement): Coordinate {
         const rowIdx = Math.floor(cellIdx / COLS);
         const colIdx = cellIdx % COLS;
         const cellWidth = canvas.width / COLS;
         const cellHeight = canvas.height / ROWS;
         const x = (colIdx * cellWidth) + cellWidth / 2;
         const y = (rowIdx * cellHeight) + cellHeight / 2;
-        return {x, y};
+        return { x, y };
     }
 
     const message: string = getMessage(status);
