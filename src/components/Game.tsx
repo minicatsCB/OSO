@@ -1,6 +1,6 @@
 import Scoreboard from './Scoreboard'
 import Board from './Board'
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { compareNumbers, markIsValid, wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import TurnButton from './TurnButton';
@@ -21,7 +21,56 @@ export default function Game() {
     const [status, setStatus] = useState<GameStatus>(GameStatus.TURN);
     const [scores, setScores] = useState<Scores>([{name: FIRST_PLAYER_NAME, points: 0}, {name: SECOND_PLAYER_NAME, points: 0}]);
     const [canMark, setCanMark] = useState<boolean>(false);
-    
+    const canvasRef = useRef<HTMLCanvasElement>({} as HTMLCanvasElement);
+
+    useEffect(() => {
+        setupCanvas();
+        clearCanvas();
+        drawMarks();
+    }, [marks]);
+
+    function setupCanvas() {
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+    }
+
+    function clearCanvas() {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    function drawMarks() {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        marks.values().forEach((mark) => {
+            const coordinates = mark.map(cellIdx => getCoordinates(cellIdx, canvas));
+            if (coordinates.length > 1) {
+                ctx.beginPath();
+                const {x: startX, y: startY} = coordinates[0];
+                ctx.moveTo(startX, startY);
+                coordinates.slice(1).forEach(({x, y}) => ctx.lineTo(x, y));
+                ctx.stroke();
+            }
+        });
+    }
+
+    function getCoordinates(cellIdx: number, canvas: HTMLCanvasElement): {x: number, y: number} {
+        const rowIdx = Math.floor(cellIdx / COLS);
+        const colIdx = cellIdx % COLS;
+        const cellWidth = canvas.width / COLS;
+        const cellHeight = canvas.height / ROWS;
+        const x = (colIdx * cellWidth) + cellWidth / 2;
+        const y = (rowIdx * cellHeight) + cellHeight / 2;
+        return {x, y};
+    }
+
     const message: string = getMessage(status);
     
     function isCellFilled(index: number): boolean {
@@ -135,7 +184,10 @@ export default function Game() {
             <h1 className="title">OSO game</h1>
             <Status message={message}/>
             <Scoreboard scores={scores} />
-            <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
+            <div className="game-container" style={{ position: 'relative' }}>
+                <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
+                <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '300px', height: '300px' }}></canvas>
+            </div>
             <div className="commands">
                 <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
                 <MarkButton onClick={toggleMarker}></MarkButton>
