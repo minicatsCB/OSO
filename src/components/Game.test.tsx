@@ -165,3 +165,5 @@ test('if a user makes a score, score should be updated', async () => {
     await clickCells([cells[0], cells[1], cells[2]]);
     await checkScore('Alice', 1);
 });
+
+// TODO: test if a user marks a word, it should be highlighted drawing a line through it. Use visual testing.
