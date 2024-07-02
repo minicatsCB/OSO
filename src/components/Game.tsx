@@ -1,6 +1,6 @@
 import Scoreboard from './Scoreboard'
 import Board from './Board'
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { compareNumbers, markIsValid, wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
 import TurnButton from './TurnButton';
@@ -23,28 +23,7 @@ export default function Game() {
     const [canMark, setCanMark] = useState<boolean>(false);
     const canvasRef = useRef<HTMLCanvasElement>({} as HTMLCanvasElement);
 
-    useEffect(() => {
-        setupCanvas();
-        clearCanvas();
-        drawMarks();
-    }, [marks]);
-
-    function setupCanvas(): void {
-        const canvas = canvasRef.current;
-        const rect = canvas.getBoundingClientRect();
-        canvas.width = rect.width;
-        canvas.height = rect.height;
-    }
-
-    function clearCanvas(): void {
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-    }
-
-    function drawMarks(): void {
+    const drawMarks = useCallback(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
@@ -59,6 +38,27 @@ export default function Game() {
                 ctx.stroke();
             }
         });
+    }, [marks]);
+
+    useEffect(() => {
+        setupCanvas();
+        clearCanvas();
+        drawMarks();
+    }, [marks, drawMarks]);
+
+    function setupCanvas(): void {
+        const canvas = canvasRef.current;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+    }
+
+    function clearCanvas(): void {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
     }
 
     function getCoordinates(cellIdx: number, canvas: HTMLCanvasElement): Coordinate {
