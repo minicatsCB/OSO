@@ -1,15 +1,11 @@
-import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { icon } from '@fortawesome/fontawesome-svg-core/import.macro'
+import { Action } from './CommonStyled';
 
-const Button = styled.button`
-    font-size: 4rem;
-`;
-
-export default function MarkButton({onClick}: any) {
+export default function MarkButton({onClick, isActive}: any) {
     return (
-        <Button data-testid="mark-btn" type='button' onClick={onClick}>
+        <Action data-testid="mark-btn" type='button' onClick={onClick} className={isActive ? 'active' : ''}>
             <FontAwesomeIcon icon={icon({name: 'highlighter', style: 'solid'})} />
-        </Button>
+        </Action>
     );
 }

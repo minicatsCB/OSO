@@ -2,8 +2,12 @@ import styled from 'styled-components'
 import Cell from './Cell';
 
 const StyledGrid = styled.div<{ $rowsNum: number; $colsNum: number; }>`
+  position: relative;
+  z-index: 1000;
+  opacity: 50%;
   width: 300px;
   height: 300px;
+  margin-bottom: 32px;
   display: grid;
   grid-template-rows: repeat(${props => props.$rowsNum}, 1fr);
   grid-template-columns: repeat(${props => props.$colsNum}, 1fr);

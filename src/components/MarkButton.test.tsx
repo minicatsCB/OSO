@@ -10,3 +10,9 @@ test('is clickable', () => {
     userEvent.click(markButton);
     expect(onClick).toHaveBeenCalledTimes(1);
 });
+
+test('is active', () => {
+    render(<MarkButton isActive={true}></MarkButton>);
+    const markButton: HTMLElement = screen.getByTestId('mark-btn');
+    expect(markButton).toHaveClass('active');
+});

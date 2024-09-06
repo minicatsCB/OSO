@@ -4,7 +4,10 @@ import { SECOND_CLICK_WAIT_TIME } from '../core/constants';
 
 const Button = styled.button`
     background-color: white;
-    font-size: 4rem;
+    font-size: 3rem;
+    border: 2px dashed #000;
+    font-family: 'Nanum Pen Script';
+    aspect-ratio: 1 / 1;
 `;
 
 export default function Cell({ index, value, onClick, isDisabled }: any) {
