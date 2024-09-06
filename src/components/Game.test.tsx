@@ -1,7 +1,13 @@
 import { render, screen, waitFor, within } from '@testing-library/react';
+import { createCanvas } from 'canvas';
 import Game from './Game';
 import { O_TOKEN, S_TOKEN } from '../core/constants';
 import { clickCells, checkScore } from '../core/test-helpers';
+
+// @ts-ignore: Mocking getContext for testing purposes
+HTMLCanvasElement.prototype.getContext = function () {
+    return createCanvas(300, 300).getContext('2d');
+};
 
 test('if turn button is clicked, status shows correct player turn', async () => {
     render(<Game />)
@@ -164,6 +170,20 @@ test('if a user makes a score, score should be updated', async () => {
     await clickCells([markBtn]);
     await clickCells([cells[0], cells[1], cells[2]]);
     await checkScore('Alice', 1);
+});
+
+test('if end button is clicked, mark button should not be active', async () => {
+    render(<Game />)
+
+    const markBtn: HTMLElement = screen.getByTestId('mark-btn');
+    const endGameBtn: HTMLElement = screen.getByTestId('end-game-btn');
+    
+    await clickCells([markBtn]);
+    expect(markBtn).toHaveClass('active');
+
+    
+    await clickCells([endGameBtn]);
+    expect(markBtn).not.toHaveClass('active');
 });
 
 // TODO: test if a user marks a word, it should be highlighted drawing a line through it. Use visual testing.

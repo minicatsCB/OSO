@@ -6,4 +6,8 @@ export const Action = styled.button`
     margin-right: 10px;
     min-width: 90px;
     min-height: 90px;
+
+    &.active {
+        background-color: blue;
+    }
 `;

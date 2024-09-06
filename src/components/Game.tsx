@@ -193,8 +193,8 @@ export default function Game() {
                 <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '300px', height: '300px' }}></canvas>
             </div>
             <div className="commands">
-                <TurnButton onClick={switchTurn} isDisabled={canMark}></TurnButton>
-                <MarkButton onClick={toggleMarker}></MarkButton>
+                <TurnButton onClick={switchTurn} isDisabled={canMark && (status !== GameStatus.ENDED)}></TurnButton>
+                <MarkButton onClick={toggleMarker} isActive={canMark && (status !== GameStatus.ENDED)}></MarkButton>
                 <EndGameButton onClick={endGame}></EndGameButton>
             </div>
         </>
