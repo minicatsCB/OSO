@@ -28,6 +28,10 @@ export default function Game() {
         const ctx = canvas.getContext('2d');
         if (!ctx) return;
 
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = '#FF00E4';
+        ctx.globalAlpha = 0.8;
+
         marks.values().forEach((mark) => {
             const coordinates: Array<Coordinate> = mark.map((cellIdx: number) => getCoordinates(cellIdx, canvas));
             if (coordinates.length > 1) {
@@ -44,7 +48,7 @@ export default function Game() {
         setupCanvas();
         clearCanvas();
         drawMarks();
-    }, [marks, drawMarks]);
+    }, [drawMarks]);
 
     function setupCanvas(): void {
         const canvas = canvasRef.current;
