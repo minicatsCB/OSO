@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { useEffect, useRef } from 'react';
-import { SECOND_CLICK_WAIT_TIME } from '../core/constants';
+import { useEffect, useRef, useState } from 'react';
+import { O_TOKEN, S_TOKEN, SECOND_CLICK_WAIT_TIME } from '../core/constants';
 
 const Button = styled.button`
     background-color: white;
@@ -10,7 +10,8 @@ const Button = styled.button`
     aspect-ratio: 1 / 1;
 `;
 
-export default function Cell({ index, value, onClick, isDisabled }: any) {
+export default function Cell({ index, onClick, isDisabled }: any) {
+    const [token, setToken] = useState<string>('');
     const timer = useRef<number | undefined>(undefined);
 
     // Runs on mount and on every re-render
@@ -24,8 +25,8 @@ export default function Cell({ index, value, onClick, isDisabled }: any) {
     });
 
     function onClickHandler(event: React.MouseEvent<HTMLButtonElement>) {
-        if (value) {
-            onClick(index, 1);
+        if (token) {
+            onClick({ index, token });
             return;
         };
 
@@ -37,16 +38,18 @@ export default function Cell({ index, value, onClick, isDisabled }: any) {
         if (event.detail === 1) {
             timer.current = window.setTimeout(
                 () => {
-                    onClick(index, 1);
+                    setToken(O_TOKEN);
+                    onClick({ index, token: O_TOKEN });
                 },
                 SECOND_CLICK_WAIT_TIME
             );
         } else if (event.detail === 2) {
-            onClick(index, 2);
+            setToken(S_TOKEN);
+            onClick({ index, token: S_TOKEN });
         }
     }
 
     return (
-        <Button type="button" onClick={onClickHandler} disabled={isDisabled}>{value}</Button>
+        <Button type="button" onClick={onClickHandler} disabled={isDisabled}>{token}</Button>
     );
 }

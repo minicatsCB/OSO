@@ -2,7 +2,7 @@ import Scoreboard from './Scoreboard'
 import Board from './Board'
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { compareNumbers, markIsValid, wordMarker } from '../core/algorithm';
-import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
+import { COLS, FIRST_PLAYER_NAME, ROWS, SECOND_PLAYER_NAME } from '../core/constants';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
@@ -15,7 +15,7 @@ let generator = wordMarker();
 generator.next();
 
 export default function Game() {
-    const [cells, setCells] = useState<Array<Cell>>(Array(ROWS * COLS).fill(null));
+    const [cells, setCells] = useState<Array<Cell>>([]);
     const [marks, setMarks] = useState<ArraySet<Mark>>(new ArraySet<Mark>());
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [status, setStatus] = useState<GameStatus>(GameStatus.TURN);
@@ -81,9 +81,9 @@ export default function Game() {
         return !!cells[index];
     }
 
-    function updateCells(index: number, token: string): void {
+    function updateCells(cell: Cell): void {
         const newCells = [...cells];
-        newCells[index] = token;
+        newCells.push(cell);
         setCells(newCells);
     }
 
@@ -135,17 +135,17 @@ export default function Game() {
         return message;
     }
 
-    function handlePlay(index: number, timesClicked: number): void {
+    function handlePlay(cell: Cell): void {
         if(status === GameStatus.ENDED) {
             return;
         }
 
         if(canMark) {
-            let markIndices = generator.next(index);
+            let markIndices = generator.next(cell.index);
             if (!markIndices.done) {
                 // We expect another click. Do nothing.
             } else if (markIndices.value) {
-                const markTokens = markIndices.value.map(cellIdx => cells[cellIdx]);
+                const markTokens = markIndices.value.map(cellIdx => cells.filter(c => c.index === cellIdx)[0].token);
                 const isValid = !markExists(markIndices.value) && markIsValid(markTokens);
                 if (isValid) {
                     updateMarks(markIndices.value);
@@ -154,12 +154,11 @@ export default function Game() {
                 resetMarker();
             }
         } else {
-            if (isCellFilled(index)) {
+            if (isCellFilled(cell.index)) {
                 return;
             }
 
-            const token = timesClicked > 1 ? S_TOKEN : O_TOKEN;
-            updateCells(index, token);
+            updateCells(cell);
         }
     }
 
@@ -189,7 +188,7 @@ export default function Game() {
             <Status message={message}/>
             <Scoreboard scores={scores} />
             <div className="game-container" style={{ position: 'relative' }}>
-                <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
+                <Board rows={ROWS} cols={COLS} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
                 <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '300px', height: '300px' }}></canvas>
             </div>
             <div className="commands">
