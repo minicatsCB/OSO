@@ -1,7 +1,7 @@
 import Scoreboard from './Scoreboard'
 import Board from './Board'
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { compareNumbers, markIsValid, wordMarker } from '../core/algorithm';
+import { compareNumbers, wordIsValid, wordMarker } from '../core/algorithm';
 import { COLS, FIRST_PLAYER_NAME, ROWS, SECOND_PLAYER_NAME } from '../core/constants';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
@@ -203,14 +203,17 @@ export default function Game() {
         }
 
         if(canMark) {
-            let markIndices = generator.next(cell.index);
-            if (!markIndices.done) {
+            let markedCells = generator.next(cell);
+            if (!markedCells.done) {
                 // We expect another click. Do nothing.
-            } else if (markIndices.value) {
-                const markTokens = markIndices.value.map(cellIdx => cells.filter(c => c.index === cellIdx)[0].token);
-                const isValid = !markExists(markIndices.value) && markIsValid(markTokens);
+            } else if (markedCells.value) {
+                const markIndices = markedCells.value.map(cell => cell.index);
+                console.log({markIndices})
+                const check1 = markExists(markIndices);
+                const check2 = wordIsValid(markedCells.value);
+                const isValid = !check1 && check2;
                 if (isValid) {
-                    updateMarks(markIndices.value);
+                    updateMarks(markIndices);
                     updatePlayerScoreBy(activePlayer, 1);
                 }
                 resetMarker();
