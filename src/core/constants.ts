@@ -6,5 +6,6 @@ export const SECOND_PLAYER_NAME : string = 'Bob';
 
 export const O_TOKEN : string = 'O';
 export const S_TOKEN: string = 'S';
+export const WORD_SIZE: number = 3;
 
 export const SECOND_CLICK_WAIT_TIME = 200;

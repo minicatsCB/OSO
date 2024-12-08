@@ -1,8 +1,8 @@
 import Scoreboard from './Scoreboard'
 import Board from './Board'
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { compareNumbers, markIsValid, wordMarker } from '../core/algorithm';
-import { COLS, FIRST_PLAYER_NAME, O_TOKEN, ROWS, SECOND_PLAYER_NAME, S_TOKEN } from '../core/constants';
+import { compareNumbers, wordIsValid, wordMarker } from '../core/algorithm';
+import { COLS, FIRST_PLAYER_NAME, ROWS, SECOND_PLAYER_NAME } from '../core/constants';
 import TurnButton from './TurnButton';
 import MarkButton from './MarkButton';
 import EndGameButton from './EndGameButton';
@@ -15,7 +15,7 @@ let generator = wordMarker();
 generator.next();
 
 export default function Game() {
-    const [cells, setCells] = useState<Array<Cell>>(Array(ROWS * COLS).fill(null));
+    const [cells, setCells] = useState<Array<Cell>>([]);
     const [marks, setMarks] = useState<ArraySet<Mark>>(new ArraySet<Mark>());
     const [activePlayer, setActivePlayer] = useState(FIRST_PLAYER_NAME);
     const [status, setStatus] = useState<GameStatus>(GameStatus.TURN);
@@ -23,6 +23,10 @@ export default function Game() {
     const [canMark, setCanMark] = useState<boolean>(false);
     const canvasRef = useRef<HTMLCanvasElement>({} as HTMLCanvasElement);
 
+    /**
+     * Draws the marks on the canvas
+     * @returns {void}
+     */
     const drawMarks = useCallback(() => {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -50,6 +54,10 @@ export default function Game() {
         drawMarks();
     }, [drawMarks]);
 
+    /**
+     * Sets the canvas width and height to match the parent container
+     * @returns {void}
+     */
     function setupCanvas(): void {
         const canvas = canvasRef.current;
         const rect = canvas.getBoundingClientRect();
@@ -57,6 +65,10 @@ export default function Game() {
         canvas.height = rect.height;
     }
 
+    /**
+     * Clears the canvas
+     * @returns {void}
+     */
     function clearCanvas(): void {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -65,6 +77,12 @@ export default function Game() {
         }
     }
 
+    /**
+     * Get the coordinates of the center of a cell respect to the canvas
+     * @param cellIdx - The index of the cell
+     * @param canvas - The canvas element
+     * @returns {Coordinate} - The coordinates of the center of the cell respect to the canvas
+     */
     function getCoordinates(cellIdx: number, canvas: HTMLCanvasElement): Coordinate {
         const rowIdx = Math.floor(cellIdx / COLS);
         const colIdx = cellIdx % COLS;
@@ -77,16 +95,31 @@ export default function Game() {
 
     const message: string = getMessage(status);
     
+    /**
+     * Checks if a cell is already filled
+     * @param index - The index of the cell to be checked
+     * @returns `true` if the cell is filled, otherwise `false`
+     */
     function isCellFilled(index: number): boolean {
         return !!cells[index];
     }
 
-    function updateCells(index: number, token: string): void {
+    /**
+     * Add a new cell to the list of cells
+     * @param cell - The cell to be added
+     * @returns {void}
+     */
+    function updateCells(cell: Cell): void {
         const newCells = [...cells];
-        newCells[index] = token;
+        newCells.push(cell);
         setCells(newCells);
     }
 
+    /**
+     * Add a new mark to the list of marks
+     * @param newMark - An array of cell indices to be added
+     * @returns {void}
+     */
     function updateMarks(newMark: Mark): void {
         const newMarks: ArraySet<Mark> = new ArraySet();
         for (const mark of marks.values()) {
@@ -96,10 +129,22 @@ export default function Game() {
         setMarks(newMarks);
     }
 
+    /**
+     * Checks if any player already marked the given cells as a word
+     * 
+    * @param {Mark} mark - An array of cell indices to be checked.
+    * @returns {boolean} - Returns `true` if the mark already exists, otherwise `false`.
+    */
     function markExists(mark: Mark): boolean {
         return marks.has(mark.sort(compareNumbers));
     }
 
+    /**
+     * Updates the score of the player with the given name
+     * @param playerName - The name of the player
+     * @param increment - The amount to increment the score by
+     * @returns {void}
+     */
     function updatePlayerScoreBy(playerName: string, increment: number): void {
         let updatedScores = [...scores]
         const foundIdx = updatedScores.findIndex(s => s.name === playerName);
@@ -109,14 +154,27 @@ export default function Game() {
         setScores(updatedScores)
     }
 
+    /**
+     * Checks if the game is a draw
+     * @returns {boolean} - Returns `true` if the game is a draw, otherwise `false`.
+     */
     function isADraw(): boolean {
         return scores.every(s => s.points === scores[0].points);
     }
 
+    /**
+     * Get the name of the player with the highest score
+     * @returns {string} - The name of the player with the highest score
+     */
     function getWinner(): string {
        return scores.reduce((a: Player, b: Player) => a.points >= b.points ? a : b ).name;
     }
 
+    /**
+     * Get the message to be displayed based on the game status
+     * @param type - The game status
+     * @returns {string} - The message to be displayed
+     */
     function getMessage(type: GameStatus): string {
         let message: string = "";
         switch (type) {
@@ -135,38 +193,48 @@ export default function Game() {
         return message;
     }
 
-    function handlePlay(index: number, timesClicked: number): void {
+    /**
+     * Handles the play event. The brain of the game. It controls when the player can play, mark a word, or end the game
+     * @param cell - The cell that was clicked
+     */
+    function handlePlay(cell: Cell): void {
         if(status === GameStatus.ENDED) {
             return;
         }
 
         if(canMark) {
-            let markIndices = generator.next(index);
-            if (!markIndices.done) {
+            let markedCells = generator.next(cell);
+            if (!markedCells.done) {
                 // We expect another click. Do nothing.
-            } else if (markIndices.value) {
-                const markTokens = markIndices.value.map(cellIdx => cells[cellIdx]);
-                const isValid = !markExists(markIndices.value) && markIsValid(markTokens);
+            } else if (markedCells.value) {
+                const markIndices = markedCells.value.map(cell => cell.index);
+                const isValid = !markExists(markIndices) && wordIsValid(markedCells.value);
                 if (isValid) {
-                    updateMarks(markIndices.value);
+                    updateMarks(markIndices);
                     updatePlayerScoreBy(activePlayer, 1);
                 }
                 resetMarker();
             }
         } else {
-            if (isCellFilled(index)) {
+            if (isCellFilled(cell.index)) {
                 return;
             }
 
-            const token = timesClicked > 1 ? S_TOKEN : O_TOKEN;
-            updateCells(index, token);
+            updateCells(cell);
         }
     }
 
+    /**
+     * Switches the turn to the next player
+     */
     function switchTurn(): void {
         setActivePlayer(activePlayer === FIRST_PLAYER_NAME ? SECOND_PLAYER_NAME : FIRST_PLAYER_NAME);
     }
 
+    /**
+     * Toggles the marker on and off. When on, allows a player to mark a word on the board. When off, the player can play normally
+     * @returns {void}
+     */
     function toggleMarker(): void {
         if(canMark) {
             resetMarker();
@@ -174,10 +242,18 @@ export default function Game() {
         setCanMark(!canMark);
     }
 
+    /**
+     * Ends the game
+     * @returns {void}
+     */
     function endGame(): void {
         setStatus(GameStatus.ENDED);
     }
 
+    /**
+     * Resets the marker. Neccesary for the player to mark a new word
+     * @returns {void}
+     */
     function resetMarker(): void {
         generator = wordMarker();
         generator.next();
@@ -189,7 +265,7 @@ export default function Game() {
             <Status message={message}/>
             <Scoreboard scores={scores} />
             <div className="game-container" style={{ position: 'relative' }}>
-                <Board rows={ROWS} cols={COLS} values={cells} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
+                <Board rows={ROWS} cols={COLS} isDisabled={status === GameStatus.ENDED} onPlay={handlePlay} />
                 <canvas ref={canvasRef} style={{ position: 'absolute', top: 0, left: 0, width: '300px', height: '300px' }}></canvas>
             </div>
             <div className="commands">
