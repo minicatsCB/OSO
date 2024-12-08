@@ -29,7 +29,10 @@ export default function Board({rows, cols, isDisabled, onPlay} : any) {
                     return (
                         <Cell
                             key={`${rowIdx}-${colIdx}`}
+                            id={cellIdx}
                             index={cellIdx}
+                            row={rowIdx}
+                            col={colIdx}
                             onClick={onPlay}
                             isDisabled={isDisabled}>
                         </Cell>

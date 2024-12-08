@@ -15,7 +15,7 @@ afterEach(() => {
 test('should render empty correctly', async () => {
   const onClick = jest.fn();
 
-  render(<Cell key="0-1" index={1} onClick={onClick}></Cell>);
+  render(<Cell key="0-1" index={1} row={0} col={1} onClick={onClick}></Cell>);
 
   const cells = screen.getAllByRole('button');
   expect(cells[0]).toBeEmptyDOMElement();
@@ -24,7 +24,7 @@ test('should render empty correctly', async () => {
 test('should call handler correctly on single click', async () => {
   const onClick = jest.fn();
 
-  render(<Cell key="1-2" index={5} onClick={onClick}></Cell>);
+  render(<Cell key="1-2" index={5} row={1} col={2} onClick={onClick}></Cell>);
 
   const cells = screen.getAllByRole('button');
   await clickCells([cells[0]]);
@@ -35,7 +35,7 @@ test('should call handler correctly on single click', async () => {
 test('should call hadnler correctly on double click', async () => {
   const onClick = jest.fn();
 
-  render(<Cell key="1-2" index={5} onClick={onClick}></Cell>);
+  render(<Cell key="1-2" index={5} row={1} col={2}onClick={onClick}></Cell>);
 
   const cells = screen.getAllByRole('button');
   await clickCells([cells[0]], true);

@@ -208,10 +208,7 @@ export default function Game() {
                 // We expect another click. Do nothing.
             } else if (markedCells.value) {
                 const markIndices = markedCells.value.map(cell => cell.index);
-                console.log({markIndices})
-                const check1 = markExists(markIndices);
-                const check2 = wordIsValid(markedCells.value);
-                const isValid = !check1 && check2;
+                const isValid = !markExists(markIndices) && wordIsValid(markedCells.value);
                 if (isValid) {
                     updateMarks(markIndices);
                     updatePlayerScoreBy(activePlayer, 1);

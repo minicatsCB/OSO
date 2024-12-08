@@ -19,6 +19,9 @@ export interface Coordinate {
 export type Word = Array<Cell>;
 
 export interface Cell {
+    id?: number;
     index: number;
+    row: number;
+    col: number;
     token: string;
 }

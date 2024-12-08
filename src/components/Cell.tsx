@@ -10,7 +10,7 @@ const Button = styled.button`
     aspect-ratio: 1 / 1;
 `;
 
-export default function Cell({ index, onClick, isDisabled }: any) {
+export default function Cell({ id, index, row, col, onClick, isDisabled }: any) {
     const [token, setToken] = useState<string>('');
     const timer = useRef<number | undefined>(undefined);
 
@@ -26,7 +26,7 @@ export default function Cell({ index, onClick, isDisabled }: any) {
 
     function onClickHandler(event: React.MouseEvent<HTMLButtonElement>) {
         if (token) {
-            onClick({ index, token });
+            onClick({ id, index, row, col, token });
             return;
         };
 
@@ -39,13 +39,13 @@ export default function Cell({ index, onClick, isDisabled }: any) {
             timer.current = window.setTimeout(
                 () => {
                     setToken(O_TOKEN);
-                    onClick({ index, token: O_TOKEN });
+                    onClick({ id, index, row, col, token: O_TOKEN });
                 },
                 SECOND_CLICK_WAIT_TIME
             );
         } else if (event.detail === 2) {
             setToken(S_TOKEN);
-            onClick({ index, token: S_TOKEN });
+            onClick({ id, index, row, col, token: S_TOKEN });
         }
     }
 
